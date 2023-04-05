@@ -65,6 +65,38 @@ def assemble_postselection_circuits(
     }
 
 
+def assemble_certification_postselection_circuits(
+    target: int,
+    ancilla: int,
+    state_preparation: Instruction,
+    u_dag: Instruction,
+    v0_dag: Instruction,
+    v1_dag: Instruction,
+) -> Dict[str, QuantumCircuit]:
+    """Assemble circuits required for running Fourier discrimination experiment using postselection.
+
+    :param target: index of qubit measured either in Z-basis or the alternative one.
+    :param ancilla: index of auxiliary qubit.
+    :param state_preparation: instruction preparing the initial state of both qubits.
+    :param u_dag: hermitian adjoint of matrix U s.t. i-th column corresponds to
+     i-th effect of alternative measurement. Can be viewed as matrix for a change of basis in
+     which measurement is being performed.
+    :param v0_dag: hermitian adjoint of positive part of Holevo-Helstrom measurement.
+    :param v1_dag: hermitian adjoint of negative part of Holevo-Helstrom measurement.
+
+    :return: dictionary with keys "id_v0", "id_v1", "u_v0", "u_v1" mapped to corresponding circuits.
+     (e.g. id_v0 maps to a circuit with identity measurement followed by v0 measurement on ancilla)
+    """
+    raw_circuits = {
+        "u_v0": _construct_black_box_circuit(state_preparation, u_dag, v0_dag),
+        "u_v1": _construct_black_box_circuit(state_preparation, u_dag, v1_dag),
+    }
+    return {
+        key: remap_qubits(circuit, {0: target, 1: ancilla}).decompose()
+        for key, circuit in raw_circuits.items()
+    }
+
+
 def compute_probabilities_from_postselection_measurements(
     id_v0_counts: MeasurementsDict,
     id_v1_counts: MeasurementsDict,
@@ -90,6 +122,25 @@ def compute_probabilities_from_postselection_measurements(
         + id_v0_counts.get("10", 0) / marginal_counts(id_v0_counts, [0]).get("0", 0)
         + id_v1_counts.get("11", 0) / marginal_counts(id_v1_counts, [0]).get("1", 0)
     ) / 4
+
+def compute_probabilities_from_certification_postselection_measurements(
+    u_v0_counts: MeasurementsDict,
+    u_v1_counts: MeasurementsDict,
+) -> float:
+    """Convert measurements obtained from postselection Fourier discrimination experiment
+    to probabilities.
+
+    :param id_v0_counts: measurements for circuit with identity measurement on target and
+     v0 measurement on ancilla.
+    :param id_v1_counts: measurements for circuit with identity measurement on target and
+     v1 measurement on ancilla.
+    :param u_v0_counts: measurements for circuit with U measurement on target and
+     v0 measurement on ancilla.
+    :param u_v1_counts: measurements for circuit with U measurement on target and
+     v1 measurement on ancilla.
+    :return: probability of distinguishing between u and identity measurements.
+    """
+    return (u_v1_counts.get("10",0) + u_v0_counts.get("00",0)) / (u_v0_counts.get("00",0) + u_v0_counts.get("01",0)+ u_v1_counts.get("10",0) + u_v1_counts.get("11",0))
 
 
 def benchmark_using_postselection(

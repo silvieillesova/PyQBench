@@ -62,6 +62,8 @@ class AnglesRange(BaseModel):
             raise ValueError("There can be only one step if start equals stop.")
         return values
 
+class Delta(BaseModel):
+    delta: Any
 
 class QubitsPair(BaseModel):
     target: Qubit
