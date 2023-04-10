@@ -1,4 +1,4 @@
-"""Functions for running Fourier discrimination experiments and interacting with the results."""
+"""Functions for running Fourier certification experiments and interacting with the results."""
 from collections import Counter, defaultdict
 from logging import getLogger
 from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
@@ -211,7 +211,7 @@ def _resolve_batches(batches: Iterable[BatchJob]) -> List[SingleResult]:
     some jobs have failed.
 
     :param batches: batches to be processed.
-    :return: dictionary mapping triples (target, ancilla, phi) to a list of results for each
+    :return: dictionary mapping triples (target, ancilla, phi, delta to a list of results for each
      circuit with that parameters.
     """
     resolved = defaultdict(list)
@@ -290,8 +290,6 @@ def run_experiment(
     circuits, keys = zip(*circuit_key_pairs)
 
 
-
-
     logger.info("Submitting jobs...")
     batches = execute_in_batches(
         backend,
@@ -355,7 +353,7 @@ def resolve_results(
     :param async_results: object describing data of asynchronous execution.
      If the result object already contains histograms, an error will be raised.
     :return: Object containing resolved data. Format of this object is the same as the one
-     returned directly from a synchronous execution of Fourier discrimination experiments. In
+     returned directly from a synchronous execution of Fourier certification experiments. In
      particular, it contains histograms of bitstrings for each circuit run during the experiment.
     """
     logger.info("Enabling account and creating backend")
@@ -418,7 +416,7 @@ def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFra
     columns = (
         ["target", "ancilla", "phi", "delta", "ideal_prob", "cert_prob"]
         if len(rows[0]) == 6
-        else ["target", "ancilla", "phi", "delta", "ideal_prob", "cert_prob", "mit_disc_prob"]
+        else ["target", "ancilla", "phi", "delta", "ideal_prob", "cert_prob", "mit_cert_prob"]
     )
 
     result = pd.DataFrame(data=rows, columns=columns)

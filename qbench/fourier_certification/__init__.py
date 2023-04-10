@@ -14,12 +14,8 @@ All components are available as properties of :class:`FourierComponents` class. 
 instances of this class can be constructed in such a way that the instructions they
 provide are compatible with several different quantum devices available on the market.
 
-Additionally, this module provides a function computing optimal discrimination probability
-for Fourier family of measurements, which is defined as:
-
-$$
-p_{U(\\varphi)} = \\frac12 + \\frac14 \\lvert 1 - e^{i \\varphi}\\rvert.
-$$
+Additionally, this module provides a function computing the minimized probability of
+type II error.
 
 """
 from typing import Union
@@ -33,18 +29,6 @@ from ._models import (
     FourierCertificationSyncResult,
     FourierExperimentSet,
 )
-
-
-
-#def discrimination_probability_upper_bound(
-    #phi: Union[float, np.ndarray]
-#) -> Union[float, np.ndarray]:
-    #"""Compute exact upper bound on the probability of discrimination.
-
-    #:param phi: angle parametrizing the performed measurement.
-    #:return: maximum probability with which identity and $p_{U(\\varphi)}$ can be discriminated.
-    #"""
-    #return 0.5 + 0.25 * np.abs(1 - np.exp(1j * phi))
 
 
 __all__ = [

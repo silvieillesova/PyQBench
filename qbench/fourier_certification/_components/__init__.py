@@ -1,4 +1,4 @@
-"""Module defining components used in Fourier discrimination experiment."""
+"""Module defining components used in Fourier certification experiment."""
 import numpy as np
 from typing import Optional, Union
 
@@ -8,9 +8,9 @@ from . import _generic, _ibmq, _lucy, _rigetti
 
 
 class FourierComponents:
-    """Class defining components for Fourier-discrimination experiment.
+    """Class defining components for Fourier-certification experiment.
 
-    :param phi: angle defining measurement to discriminate. May be a number or an instance of
+    :param phi: angle defining measurement to certificate. May be a number or an instance of
       a Qiskit Parameter. See
       :qiskit_tutorial:`here <circuits_advanced/01_advanced_circuits.html#Parameterized-circuits>`_
       if you are new to parametrized circuits in Qiskit.
@@ -67,7 +67,7 @@ class FourierComponents:
 
            This instruction is needed because on actual devices we can only measure in Z-basis.
            The $U^\dagger$ unitary changes basis so that subsequent measurement in Z-basis can
-           be considered as performing desired von Neumann measurement to be discriminated from
+           be considered as performing desired von Neumann measurement to be certified from
            the Z-basis one.
         """
 
@@ -125,12 +125,13 @@ def certification_probability_upper_bound(
     phi: Union[float, np.ndarray],
     delta: float
 ) -> Union[float, np.ndarray]:
-    """Compute upper bound on the probability of correct certification between measurements in P_U and P_1.
+    """Compute the minimized probability of type II error in certificatio scheme
+      between measurements in P_U and P_1.
 
     :param phi: angle of measurement P_U to be certified from P_1.
     :param delta: a given statistical significance.
 
-    :return: maximum probability with which measurements P_1  and P_U can be certified.
+    :return: minimized probability of type II error.
     """
 
     if 1/2 * np.abs(1+ np.exp(-1j*phi)) > np.sqrt(delta):
