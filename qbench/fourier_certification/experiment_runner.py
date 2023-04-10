@@ -421,12 +421,12 @@ def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFra
 
     result = pd.DataFrame(data=rows, columns=columns)
 
-    fig, ax = plt.subplots()
-    ax.plot(phis, theoretical_probs, color="red", label="theoretical_predictions")
-    ax.plot(phis, actual_probs, color="blue", label="actual results")
-    ax.legend()
+    #fig, ax = plt.subplots()
+    #ax.plot(phis, theoretical_probs, color="red", label="theoretical_predictions")
+    #ax.plot(phis, actual_probs, color="blue", label="actual results")
+    #ax.legend()
 
-    plt.savefig(PATH + f'direct_sum_{backend}_{NUM_SHOTS_PER_MEASUREMENT}.png')
+    #plt.savefig(PATH + f'direct_sum_{backend}_{NUM_SHOTS_PER_MEASUREMENT}.png')
 
     logger.info("Done")
     return result
