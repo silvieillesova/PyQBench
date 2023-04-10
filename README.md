@@ -1,4 +1,3 @@
 # PyQBench
 
-PyQBench is a package for benchmarking gate-based quantum computers by 
-estimating how well they can discriminate between certain measurements.
+PyQBench is a package for benchmarking gate-based quantum computers based on discrimination and certification schemes of von Neumann measurements.
