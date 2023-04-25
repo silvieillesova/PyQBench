@@ -5,10 +5,10 @@ qubits:
 angles:
   start: 0
   stop: 2 * pi
-  num_steps: 25
+  num_steps: 2
 delta: 0.05
 gateset: ibmq
 method: direct_sum
-num_shots: 10000
+num_shots: 10
 
 

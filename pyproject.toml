@@ -35,7 +35,8 @@ dependencies = [
     "mthree ~= 1.1.0",
     "tqdm ~= 4.64.1",
     "pyyaml ~= 6.0",
-    "qiskit-braket-provider ~= 0.0.3"
+    "qiskit-braket-provider ~= 0.0.3",
+    "matplotlib ~= 3.7.1"
 ]
 dynamic = ["version"]
 

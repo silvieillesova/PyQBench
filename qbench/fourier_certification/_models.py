@@ -93,7 +93,7 @@ class SingleResult(BaseModel):
 
 class BatchResult(BaseModel):
     job_id: str
-    keys: Sequence[Tuple[int, int, str, float]]
+    keys: Sequence[Tuple[int, int, str, float, float]]
 
 
 class FourierCertificationSyncResult(BaseModel):

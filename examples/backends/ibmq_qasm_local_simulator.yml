@@ -1,5 +1,5 @@
 name: ibmq_qasm_simulator
-asynchronous: false
+asynchronous: true
 provider:
   hub: ibm-q
   group: open
