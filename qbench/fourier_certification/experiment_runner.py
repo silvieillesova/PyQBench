@@ -99,6 +99,9 @@ def _mitigate(
 
     mitigator.cals_from_matrices(matrices)
     result = mitigator.apply_correction(counts, [target, ancilla])
+    
+    # Probability distribution
+    result = result.nearest_probability_distribution()
     # Wrap value in native floats, otherwise we get serialization problems
     return {key: float(value) for key, value in result.items()}
 
