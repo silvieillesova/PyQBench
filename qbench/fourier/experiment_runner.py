@@ -11,7 +11,12 @@ from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
 
-from ..batching import BatchJob, execute_in_batches
+import sys
+from pathlib import Path
+sys.path.append(str(Path(sys.argv[0]).resolve().parent.parent))
+
+
+from qbench.batching import BatchJob, execute_in_batches
 from ..common_models import Backend, BackendDescription
 from ..jobs import retrieve_jobs
 from ..limits import get_limits
