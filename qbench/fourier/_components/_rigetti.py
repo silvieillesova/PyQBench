@@ -7,7 +7,7 @@ import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction
 
-from ...common_models import AnyParameter
+from qbench.common_models import AnyParameter
 
 INSTRUCTIONS_TO_DECOMPOSE = ["hadamard-rigetti", "cnot-rigetti", "v0-dag"]
 

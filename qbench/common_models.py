@@ -5,11 +5,12 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic.v1 import BaseModel as PydanticBaseModel
 from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
-from qiskit import IBMQ
+#from qiskit import IBMQ
+from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit.circuit import Parameter
 from qiskit.providers import BackendV1, BackendV2
 
-from ._expressions import eval_expr
+from qbench._expressions import eval_expr
 
 AnyParameter = Union[float, Parameter]
 
@@ -146,6 +147,7 @@ class IBMQBackendDescription(BaseModel):
     provider: IBMQProviderDescription
 
     def create_backend(self):
+        '''
         if IBMQ.active_account():
             provider = IBMQ.get_provider(
                 hub=self.provider.hub,
@@ -160,6 +162,14 @@ class IBMQBackendDescription(BaseModel):
                 project=self.provider.project,
             )
         return provider.get_backend(self.name)
+        '''
+
+        service = QiskitRuntimeService(channel='ibm_quantum', 
+                                       instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
+        return service.backend.name
+
+        # TODO finish!
+        #exit(-1)
 
 
 BackendDescription = Union[

@@ -8,7 +8,7 @@ FourierComponents class.
 import numpy as np
 from qiskit.circuit import Instruction, QuantumCircuit
 
-from ...common_models import AnyParameter
+from common_models import AnyParameter
 
 
 def state_preparation() -> Instruction:

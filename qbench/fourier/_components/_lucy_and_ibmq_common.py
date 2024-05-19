@@ -7,7 +7,7 @@ import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction
 
-from ...common_models import AnyParameter
+from qbench.common_models import AnyParameter
 
 
 def u_dag(phi: AnyParameter) -> Instruction:
