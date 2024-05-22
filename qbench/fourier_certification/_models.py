@@ -11,9 +11,9 @@ from typing import (
 )
 
 import numpy as np
-from pydantic import validator
+from pydantic.v1 import validator
 
-from ..common_models import (
+from qbench.common_models import (
     AnglesRange,
     Delta,
     BackendDescription,

@@ -13,21 +13,21 @@ from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
 
-from ._components.__init__ import certification_probability_upper_bound
-from ..batching import BatchJob, execute_in_batches
-from ..common_models import Backend, BackendDescription
-from ..jobs import retrieve_jobs
-from ..limits import get_limits
-from ..schemes.direct_sum import (
+from _components.__init__ import certification_probability_upper_bound
+from qbench.batching import BatchJob, execute_in_batches
+from qbench.common_models import Backend, BackendDescription
+from qbench.jobs import retrieve_jobs
+from qbench.limits import get_limits
+from qbench.schemes.direct_sum import (
     assemble_certification_direct_sum_circuits,
     compute_probabilities_from_certification_direct_sum_measurements,
 )
-from ..schemes.postselection import (
+from qbench.schemes.postselection import (
     assemble_certification_postselection_circuits,
     compute_probabilities_from_certification_postselection_measurements,
 )
-from ._components import FourierComponents
-from ._models import (
+from _components import FourierComponents
+from _models import (
     BatchResult,
     FourierCertificationAsyncResult,
     FourierCertificationSyncResult,
