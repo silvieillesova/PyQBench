@@ -33,6 +33,7 @@ dependencies = [
     "pydantic",
     "qiskit",
     "qiskit-aer",
+    "qiskit-ibm-runtime",
     "mthree",
     "tqdm",
     "pyyaml",
