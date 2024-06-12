@@ -28,8 +28,8 @@ from qbench.schemes.postselection import (
     assemble_postselection_circuits,
     compute_probabilities_from_postselection_measurements,
 )
-from _components import FourierComponents
-from _models import (
+from ._components.components import FourierComponents
+from ._models import (
     BatchResult,
     FourierDiscriminationAsyncResult,
     FourierDiscriminationSyncResult,
