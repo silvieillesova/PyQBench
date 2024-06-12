@@ -4,16 +4,14 @@ from logging import getLogger
 from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
 
 import numpy as np
-from matplotlib import pyplot as plt
 
 import pandas as pd
 from mthree import M3Mitigation
 from qiskit import QiskitError, QuantumCircuit
-from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
 
-from _components.__init__ import certification_probability_upper_bound
+from ._components.__init__ import certification_probability_upper_bound
 from qbench.batching import BatchJob, execute_in_batches
 from qbench.common_models import Backend, BackendDescription
 from qbench.jobs import retrieve_jobs
@@ -26,8 +24,8 @@ from qbench.schemes.postselection import (
     assemble_certification_postselection_circuits,
     compute_probabilities_from_certification_postselection_measurements,
 )
-from _components import FourierComponents
-from _models import (
+from ._components import FourierComponents
+from ._models import (
     BatchResult,
     FourierCertificationAsyncResult,
     FourierCertificationSyncResult,
