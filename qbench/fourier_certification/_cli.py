@@ -3,6 +3,11 @@
 This module also contains thin wrappers for functions from qbench.fourier.experiment_runner,
 to adapt them for command line usage.
 """
+from qiskit_aer import AerSimulator
+from qiskit_ibm_provider import IBMProvider
+IBMProvider.save_account('bfa4c404d025086e0f41c3eb1df0513461321d3a06b023668a4d9527dddc22bb5de94f8e8c2aa283050bcf6d9eb68bba034b8d275319cf26347ecb2475f8500f', overwrite=True)
+#IBMProvider.load_account()
+
 from argparse import FileType, Namespace
 
 from yaml import safe_dump, safe_load
@@ -23,9 +28,20 @@ from .experiment_runner import (
 
 def _run_benchmark(args: Namespace) -> None:
     """Function executed when qbench cert-fourier benchmark is invoked."""
+    print('Benchmark info')
+    print(f'input args: {args}')
+
     experiment = FourierExperimentSet(**safe_load(args.experiment_file))
+
+    # Parse the configuration file depending on the type of a backend (IBM - online or local Aer-based)
+
     backend_description = BackendDescriptionRoot(__root__=safe_load(args.backend_file)).__root__
 
+    print(f'backend description: {backend_description}')
+    print(f'backend: {backend_description.create_backend()}')
+    print(f'backend name: {backend_description.name}')
+
+    # exit(-1)
     result = run_experiment(experiment, backend_description)
     safe_dump(result.dict(), args.output, sort_keys=False, default_flow_style=None)
 

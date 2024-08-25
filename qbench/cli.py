@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from .fourier import add_fourier_parser
 from .fourier_certification import add_fourier_parser_certification
 
-from .logging import configure_logging
+from .logger import configure_logging
 
 PARSERS_TO_ADD = [add_fourier_parser, add_fourier_parser_certification]
 

@@ -252,7 +252,6 @@ def run_experiment(
     """
     _log_fourier_experiments(experiments)
 
-
     backend = backend_description.create_backend()
     logger.info(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
 

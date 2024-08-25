@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic.v1 import BaseModel as PydanticBaseModel
 from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
+from qiskit_aer import AerSimulator
 #from qiskit import IBMQ
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit.circuit import Parameter
@@ -166,14 +167,23 @@ class IBMQBackendDescription(BaseModel):
 
         service = QiskitRuntimeService(channel='ibm_quantum', 
                                        instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
-        return service.backend.name
+
+        return service.backend()
 
         # TODO finish!
         #exit(-1)
 
 
+class AerBackendDescription(BaseModel):
+    name: str
+    asynchronous: str = False
+
+    def create_backend(self):
+        return AerSimulator()
+
+
 BackendDescription = Union[
-    SimpleBackendDescription, BackendFactoryDescription, IBMQBackendDescription
+    SimpleBackendDescription, BackendFactoryDescription, IBMQBackendDescription, AerBackendDescription
 ]
 
 
