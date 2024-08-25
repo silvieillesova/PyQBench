@@ -28,20 +28,8 @@ from .experiment_runner import (
 
 def _run_benchmark(args: Namespace) -> None:
     """Function executed when qbench cert-fourier benchmark is invoked."""
-    print('Benchmark info')
-    print(f'input args: {args}')
-
     experiment = FourierExperimentSet(**safe_load(args.experiment_file))
-
-    # Parse the configuration file depending on the type of a backend (IBM - online or local Aer-based)
-
     backend_description = BackendDescriptionRoot(__root__=safe_load(args.backend_file)).__root__
-
-    print(f'backend description: {backend_description}')
-    print(f'backend: {backend_description.create_backend()}')
-    print(f'backend name: {backend_description.name}')
-
-    # exit(-1)
     result = run_experiment(experiment, backend_description)
     safe_dump(result.dict(), args.output, sort_keys=False, default_flow_style=None)
 
