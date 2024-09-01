@@ -1,0 +1,6 @@
+name: ibm_brisbane
+asynchronous: true
+provider:
+  hub: ibm-q
+  group: open
+  project: main
