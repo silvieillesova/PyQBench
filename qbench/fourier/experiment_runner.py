@@ -303,13 +303,13 @@ def fetch_statuses(async_results: FourierDiscriminationAsyncResult) -> Dict[str,
     :return: dictionary mapping status name to number of its occurrences.
     """
     logger.info("Enabling account and creating backend")
-    backend = async_results.metadata.backend_description.create_backend()
+    # backend = async_results.metadata.backend_description.create_backend()
 
     logger.info("Reading jobs ids from the input file")
     job_ids = [entry.job_id for entry in async_results.data]
 
     logger.info("Retrieving jobs, this might take a while...")
-    jobs = retrieve_jobs(backend, job_ids)
+    jobs = retrieve_jobs(job_ids)
     logger.info("Done")
 
     return dict(Counter(job.status().name for job in jobs))

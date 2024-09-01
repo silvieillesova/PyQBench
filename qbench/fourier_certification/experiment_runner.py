@@ -332,14 +332,14 @@ def fetch_statuses(async_results: FourierCertificationAsyncResult) -> Dict[str, 
      If the result object already contains histograms, an error will be raised.
     :return: dictionary mapping status name to number of its occurrences.
     """
-    logger.info("Enabling account and creating backend")
-    backend = async_results.metadata.backend_description.create_backend()
+    # logger.info("Enabling account and creating backend")
+    # backend = async_results.metadata.backend_description.create_backend()
 
     logger.info("Reading jobs ids from the input file")
     job_ids = [entry.job_id for entry in async_results.data]
 
     logger.info("Retrieving jobs, this might take a while...")
-    jobs = retrieve_jobs(backend, job_ids)
+    jobs = retrieve_jobs(job_ids)
     logger.info("Done")
 
     return dict(Counter(job.status().name for job in jobs))
@@ -356,14 +356,14 @@ def resolve_results(
      returned directly from a synchronous execution of Fourier certification experiments. In
      particular, it contains histograms of bitstrings for each circuit run during the experiment.
     """
-    logger.info("Enabling account and creating backend")
-    backend = async_results.metadata.backend_description.create_backend()
+    # logger.info("Enabling account and creating backend")
+    # backend = async_results.metadata.backend_description.create_backend()
 
     logger.info("Reading jobs ids from the input file")
     job_ids = [entry.job_id for entry in cast(List[BatchResult], async_results.data)]
 
     logger.info(f"Fetching total of {len(job_ids)} jobs")
-    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(backend, job_ids)}
+    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(job_ids)}
 
     batches = [BatchJob(jobs_mapping[entry.job_id], entry.keys) for entry in async_results.data]
 

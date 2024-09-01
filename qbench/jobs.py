@@ -4,10 +4,12 @@ from typing import Sequence
 
 from qiskit.providers import JobV1
 #from qiskit.providers.ibmq import IBMQBackend, IBMQJob
+from qiskit_ibm_runtime import QiskitRuntimeService
 
+service = QiskitRuntimeService()
 
 @singledispatch
-def retrieve_jobs(backend, job_ids: Sequence[str]) -> Sequence[JobV1]:
+def retrieve_jobs(job_ids: Sequence[str]) -> Sequence[JobV1]:
     """Retrieve jobs with given ids from a backend.
 
     :param backend: backend which was used to run the jobs.
@@ -15,7 +17,8 @@ def retrieve_jobs(backend, job_ids: Sequence[str]) -> Sequence[JobV1]:
     :return: sequence of jobs. Note that it is not guaranteed that the order of this sequence
      will match order of ids in job_ids parameter.
     """
-    return [backend.retrieve_job(job_id) for job_id in job_ids]
+
+    return [service.job(job_id) for job_id in job_ids]
 
 
 #@retrieve_jobs.register
