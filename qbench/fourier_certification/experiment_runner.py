@@ -7,7 +7,7 @@ import numpy as np
 
 import pandas as pd
 from mthree import M3Mitigation
-from qiskit import QiskitError, QuantumCircuit
+from qiskit import QiskitError, QuantumCircuit, transpile
 from qiskit.providers import JobV1
 from tqdm import tqdm
 
@@ -282,7 +282,7 @@ def run_experiment(
             ancilla=ancilla,
             )
             for circuit_name, circuit in cos.items():
-                circuit_key_pairs += [(circuit,
+                circuit_key_pairs += [(transpile(circuit, backend=backend),
                 (target, ancilla, circuit_name, float(phi), experiments.delta),)]
 
     logger.info("Assembling experiments...")

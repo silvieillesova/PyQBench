@@ -168,7 +168,7 @@ class IBMQBackendDescription(BaseModel):
         service = QiskitRuntimeService(channel='ibm_quantum', 
                                        instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
 
-        return service.backend()
+        return service.backend(name=self.name)
 
         # TODO finish!
         #exit(-1)
