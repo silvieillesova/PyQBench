@@ -133,3 +133,7 @@ dmypy.json
 
 # Generated files
 res.yml
+resolved.yml
+results.yml
+resolved.csv
+results.csv
