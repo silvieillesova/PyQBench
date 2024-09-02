@@ -100,4 +100,5 @@ dependencies:
       - urllib3==2.2.1
       - websocket-client==1.8.0
       - zipp==3.18.1
+      - pydantic.v1
 prefix: /home/martinb/anaconda3/envs/PyQBench

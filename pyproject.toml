@@ -30,7 +30,7 @@ dependencies = [
     "scipy",
     "pandas",
     "amazon-braket-sdk",
-    "pydantic",
+    "pydantic.v1",
     "qiskit",
     "qiskit-aer",
     "qiskit-ibm-runtime",
