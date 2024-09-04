@@ -74,7 +74,6 @@ dependencies:
       - pydantic-core==2.18.2
       - pyjwt==2.8.0
       - pyparsing==3.1.2
-      - pyqbench==0.1.dev60+ge7e5e86.d20240611
       - pyspnego==0.10.2
       - python-dateutil==2.9.0.post0
       - pytz==2024.1
@@ -100,5 +99,3 @@ dependencies:
       - urllib3==2.2.1
       - websocket-client==1.8.0
       - zipp==3.18.1
-      - pydantic.v1
-prefix: /home/martinb/anaconda3/envs/PyQBench
