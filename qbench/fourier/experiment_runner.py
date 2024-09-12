@@ -336,7 +336,7 @@ def resolve_results(
     job_ids = [entry.job_id for entry in cast(List[BatchResult], async_results.data)]
 
     logger.info(f"Fetching total of {len(job_ids)} jobs")
-    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(backend, job_ids)}
+    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(job_ids)}
 
     batches = [BatchJob(jobs_mapping[entry.job_id], entry.keys) for entry in async_results.data]
 
