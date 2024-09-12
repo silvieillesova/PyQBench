@@ -8,6 +8,6 @@ angles:
   num_steps: 5
 gateset: ibmq
 method: direct_sum
-num_shots: 10
+num_shots: 100
 
 
