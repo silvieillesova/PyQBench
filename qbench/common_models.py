@@ -144,28 +144,10 @@ class IBMQProviderDescription(BaseModel):
 class IBMQBackendDescription(BaseModel):
     name: str
     asynchronous: bool = False
-
     provider: IBMQProviderDescription
 
     def create_backend(self):
-        '''
-        if IBMQ.active_account():
-            provider = IBMQ.get_provider(
-                hub=self.provider.hub,
-                group=self.provider.group,
-                project=self.provider.project,
-            )
-        else:
-            provider = IBMQ.enable_account(
-                os.getenv("IBMQ_TOKEN"),
-                hub=self.provider.hub,
-                group=self.provider.group,
-                project=self.provider.project,
-            )
-        return provider.get_backend(self.name)
-        '''
-
-        service = QiskitRuntimeService(channel='ibm_quantum', 
+        service = QiskitRuntimeService(channel='ibm_quantum',
                                        instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
 
         return service.backend(name=self.name)
