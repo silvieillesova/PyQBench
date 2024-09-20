@@ -1,10 +1,13 @@
 import os
 
 import pytest
-from qiskit import IBMQ, QuantumCircuit
+from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction
+from qiskit_ibm_runtime import QiskitRuntimeService
 
 from qbench.fourier import FourierComponents
+
+service = QiskitRuntimeService()
 
 
 def _assert_can_be_run(backend, instruction: Instruction):
@@ -19,7 +22,7 @@ def _assert_can_be_run(backend, instruction: Instruction):
 @pytest.fixture(scope="module")
 def ibmq():
     token = os.getenv("IBMQ_TOKEN")
-    IBMQ.enable_account(token)
+    QiskitRuntimeService.load_account(token)
     provider = IBMQ.get_provider()
     return provider.get_backend("ibmq_manila")
 

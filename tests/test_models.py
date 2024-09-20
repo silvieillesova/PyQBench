@@ -3,7 +3,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 from pydantic import ValidationError
-from qiskit.providers.aer import AerProvider
+from qiskit_aer import AerProvider
 from qiskit_braket_provider import BraketLocalBackend
 from yaml import safe_load
 
