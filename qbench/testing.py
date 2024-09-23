@@ -63,9 +63,9 @@ class MockSimulator(AerSimulator):
         self._job_count = 0
         self._name = name
 
-    def name(self):
-        """Return name of this backend."""
-        return self._name
+    # def name(self):
+    #     """Return name of this backend."""
+    #     return self._name
 
     def retrieve_job(self, job_id: str) -> JobV1:
         """Retrieve job of given ID."""
@@ -115,7 +115,7 @@ class MockProvider(ProviderV1):
         return (
             all_backends
             if name is None
-            else [backend for backend in all_backends if backend.name() == name]
+            else [backend for backend in all_backends if backend.name == name]
         )
 
     @staticmethod
