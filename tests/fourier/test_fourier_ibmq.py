@@ -21,10 +21,11 @@ def _assert_can_be_run(backend, instruction: Instruction):
 
 @pytest.fixture(scope="module")
 def ibmq():
-    token = os.getenv("IBMQ_TOKEN")
-    QiskitRuntimeService.load_account(token)
-    provider = IBMQ.get_provider()
-    return provider.get_backend("ibmq_manila")
+    if sum(e in os.environ for e in ('QISKIT_IBM_TOKEN', 'IBMQ_TOKEN')) > 0:
+        return service.least_busy()
+
+    raise ValueError('Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or '
+                     'IBMQ_TOKEN (deprecated)!')
 
 
 @pytest.fixture()
