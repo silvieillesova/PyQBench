@@ -60,7 +60,9 @@ class TestSimpleBackendDescription:
     ):
         backend = description.create_backend()
         assert isinstance(backend, BraketLocalBackend)
-        assert backend.name == "sv_simulator"
+        # TODO why was there "sv_simulator" as a reference? Is it because of
+        #  https://github.com/qiskit-community/qiskit-braket-provider/issues/87?
+        assert backend.name == backend_name
         assert backend.backend_name == backend_name
 
 

@@ -52,7 +52,7 @@ def _get_limits_for_ibmq_backend(backend: IBMBackend):
 
 @get_limits.register
 def _get_limits_for_aer_simulator(backend: AerSimulator):
-    return Limits(max_shots=backend.options['max_shot_size'])
+    return Limits(max_shots=backend.configuration().max_shots)
 
 
 @get_limits.register
