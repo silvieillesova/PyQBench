@@ -61,7 +61,7 @@ class MockSimulator(AerSimulator):
         super().__init__(*args, **kwargs)
         self._job_dict = {}
         self._job_count = 0
-        self._name = name
+        self.name = name
 
     # def name(self):
     #     """Return name of this backend."""
@@ -112,6 +112,7 @@ class MockProvider(ProviderV1):
             _create_failing_mock_simulator(),
             _create_mock_simulator_with_mitigation_info(),
         ]
+
         return (
             all_backends
             if name is None

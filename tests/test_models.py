@@ -82,7 +82,7 @@ class TestBackendFactoryDescription:
     @pytest.mark.parametrize(
         "provider, name, provider_cls",
         [
-            ("qiskit.providers.aer:AerProvider", "aer_simulator", AerProvider),
+            ("qiskit_aer:AerProvider", "aer_simulator", AerProvider),
         ],
     )
     def test_backend_created_from_description_has_correct_name_and_provider(
@@ -90,8 +90,8 @@ class TestBackendFactoryDescription:
     ):
         backend = SimpleBackendDescription(provider=provider, name=name).create_backend()
 
-        assert backend.name() == name
-        assert isinstance(backend.provider(), provider_cls)
+        assert backend.name == name
+        assert isinstance(backend.provider, provider_cls)
 
 
 class TestFourierDiscriminationExperimentSet:

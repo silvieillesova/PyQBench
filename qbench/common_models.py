@@ -1,4 +1,3 @@
-import os
 import re
 from importlib import import_module
 from typing import Any, Dict, List, Optional, Union
@@ -6,7 +5,6 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic.v1 import BaseModel as PydanticBaseModel
 from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
 from qiskit_aer import AerSimulator
-#from qiskit import IBMQ
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit.circuit import Parameter
 from qiskit.providers import BackendV1, BackendV2
