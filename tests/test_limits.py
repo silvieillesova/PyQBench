@@ -1,8 +1,8 @@
 import os
 
 import pytest
-from qiskit import IBMQ
-from qiskit.providers.aer import AerSimulator
+from qiskit_ibm_provider import IBMProvider
+from qiskit_aer import AerSimulator
 from qiskit_braket_provider import AWSBraketProvider, BraketLocalBackend
 
 from qbench.limits import get_limits
@@ -13,7 +13,12 @@ IBMQ_TOKEN = os.getenv("IBMQ_TOKEN")
 
 @pytest.fixture(scope="module")
 def ibmq_provider():
-    return IBMQ.get_provider() if IBMQ.active_account() else IBMQ.enable_account(IBMQ_TOKEN)
+    # TODO Maybe stop supporting IBMQ_TOKEN variable?
+    if sum(e in os.environ for e in ('QISKIT_IBM_TOKEN', 'IBMQ_TOKEN')) > 0:
+        return IBMProvider()
+
+    raise ValueError('Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or '
+                     'IBMQ_TOKEN (deprecated)!')
 
 
 @pytest.fixture(scope="module")

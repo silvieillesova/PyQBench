@@ -1,6 +1,6 @@
 import pytest
 from qiskit import QuantumCircuit
-from qiskit.providers.aer import AerSimulator
+from qiskit_aer import AerSimulator
 
 from qbench.batching import batch_circuits_with_keys, execute_in_batches
 

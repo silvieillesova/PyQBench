@@ -1,4 +1,3 @@
-import os
 import re
 from importlib import import_module
 from typing import Any, Dict, List, Optional, Union
@@ -6,7 +5,6 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic.v1 import BaseModel as PydanticBaseModel
 from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
 from qiskit_aer import AerSimulator
-#from qiskit import IBMQ
 from qiskit_ibm_runtime import QiskitRuntimeService
 from qiskit.circuit import Parameter
 from qiskit.providers import BackendV1, BackendV2
@@ -144,28 +142,10 @@ class IBMQProviderDescription(BaseModel):
 class IBMQBackendDescription(BaseModel):
     name: str
     asynchronous: bool = False
-
     provider: IBMQProviderDescription
 
     def create_backend(self):
-        '''
-        if IBMQ.active_account():
-            provider = IBMQ.get_provider(
-                hub=self.provider.hub,
-                group=self.provider.group,
-                project=self.provider.project,
-            )
-        else:
-            provider = IBMQ.enable_account(
-                os.getenv("IBMQ_TOKEN"),
-                hub=self.provider.hub,
-                group=self.provider.group,
-                project=self.provider.project,
-            )
-        return provider.get_backend(self.name)
-        '''
-
-        service = QiskitRuntimeService(channel='ibm_quantum', 
+        service = QiskitRuntimeService(channel='ibm_quantum',
                                        instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
 
         return service.backend(name=self.name)

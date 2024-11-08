@@ -10,9 +10,8 @@ service = QiskitRuntimeService()
 
 @singledispatch
 def retrieve_jobs(job_ids: Sequence[str]) -> Sequence[JobV1]:
-    """Retrieve jobs with given ids from a backend.
+    """Retrieve jobs with given ids from a service.
 
-    :param backend: backend which was used to run the jobs.
     :param job_ids: identifiers of jobs to obtain.
     :return: sequence of jobs. Note that it is not guaranteed that the order of this sequence
      will match order of ids in job_ids parameter.

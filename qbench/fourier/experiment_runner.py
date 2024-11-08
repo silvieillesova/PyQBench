@@ -6,7 +6,7 @@ from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
 import numpy as np
 import pandas as pd
 from mthree import M3Mitigation
-from qiskit import QiskitError, QuantumCircuit
+from qiskit import QiskitError, QuantumCircuit, transpile
 from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
@@ -179,7 +179,7 @@ def _collect_circuits_and_keys(
     logger.info("Assembling experiments...")
     circuit_key_pairs = [
         (
-            circuit.bind_parameters({components.phi: phi}),
+            circuit.assign_parameters({components.phi: phi}, inplace=False),
             (target, ancilla, circuit_name, float(phi)),
         )
         for (target, ancilla, phi) in tqdm(list(experiments.enumerate_experiment_labels()))
@@ -260,6 +260,9 @@ def run_experiment(
 
     circuits, keys = _collect_circuits_and_keys(experiments, components)
 
+    # Transpile circuit according to the universal set of gates supported by the selected backend
+    circuits = [transpile(circuit, backend=backend) for circuit in circuits]
+
     logger.info("Submitting jobs...")
     batches = execute_in_batches(
         backend,
@@ -333,7 +336,7 @@ def resolve_results(
     job_ids = [entry.job_id for entry in cast(List[BatchResult], async_results.data)]
 
     logger.info(f"Fetching total of {len(job_ids)} jobs")
-    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(backend, job_ids)}
+    jobs_mapping = {job.job_id(): job for job in retrieve_jobs(job_ids)}
 
     batches = [BatchJob(jobs_mapping[entry.job_id], entry.keys) for entry in async_results.data]
 

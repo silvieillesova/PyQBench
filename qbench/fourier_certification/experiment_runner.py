@@ -179,7 +179,7 @@ def _collect_circuits_and_keys(
     logger.info("Assembling experiments...")
     circuit_key_pairs = [
         (
-            circuit.bind_parameters({components.phi: float(phi)}),
+            circuit.assign_parameters({components.phi: float(phi)}),
             (target, ancilla, circuit_name, float(phi)),
         )
         for (target, ancilla, phi) in tqdm(list(experiments.enumerate_experiment_labels()))
