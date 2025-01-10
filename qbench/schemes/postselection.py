@@ -183,7 +183,7 @@ def benchmark_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_certification_postselection_circuits(
+    circuits = assemble_postselection_circuits(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
