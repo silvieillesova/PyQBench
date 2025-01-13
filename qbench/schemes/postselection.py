@@ -97,7 +97,7 @@ def assemble_certification_postselection_circuits(
     }
 
 
-def compute_probabilities_from_postselection_measurements(
+def compute_probabilities_discrimination_postselection(
     id_v0_counts: MeasurementsDict,
     id_v1_counts: MeasurementsDict,
     u_v0_counts: MeasurementsDict,
@@ -123,7 +123,7 @@ def compute_probabilities_from_postselection_measurements(
         + id_v1_counts.get("11", 0) / marginal_counts(id_v1_counts, [0]).get("1", 0)
     ) / 4
 
-def compute_probabilities_from_certification_postselection_measurements(
+def compute_probabilities_certification_postselection(
     u_v0_counts: MeasurementsDict,
     u_v1_counts: MeasurementsDict,
 ) -> float:
@@ -197,7 +197,7 @@ def benchmark_using_postselection(
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_from_postselection_measurements(
+    return compute_probabilities_discrimination_postselection(
         counts["id_v0"], counts["id_v1"], counts["u_v0"], counts["u_v1"]
     )
 
@@ -255,6 +255,6 @@ def benchmark_certification_using_postselection(
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_from_certification_postselection_measurements(
+    return compute_probabilities_certification_postselection(
         counts["u_v0"], counts["u_v1"]
     )

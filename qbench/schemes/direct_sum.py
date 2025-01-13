@@ -79,7 +79,7 @@ def assemble_certification_direct_sum_circuits(
         "u": remap_qubits(u_circuit, {0: target, 1: ancilla}).decompose(),
     }
 
-def compute_probabilities_from_direct_sum_measurements(
+def compute_probabilities_discrimination_direct_sum(
     id_counts: MeasurementsDict, u_counts: MeasurementsDict
 ) -> float:
     """Convert measurements obtained from direct_sum Fourier experiment to probabilities.
@@ -94,7 +94,7 @@ def compute_probabilities_from_direct_sum_measurements(
     ) / (2 * num_shots_per_measurement)
 
 
-def compute_probabilities_from_certification_direct_sum_measurements(
+def compute_probabilities_certification_direct_sum(
     u_counts: MeasurementsDict
 ) -> float:
     """Convert measurements obtained from direct_sum Fourier experiment to probabilities.
@@ -158,7 +158,7 @@ def benchmark_using_direct_sum(
     id_counts = backend.run(circuits["id"], shots=num_shots_per_measurement).result().get_counts()
     u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
 
-    return compute_probabilities_from_direct_sum_measurements(id_counts, u_counts)
+    return compute_probabilities_discrimination_direct_sum(id_counts, u_counts)
 
 def benchmark_certification_using_direct_sum(
     backend: Union[BackendV1, BackendV2],
@@ -209,4 +209,4 @@ def benchmark_certification_using_direct_sum(
 
     u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
 
-    return compute_probabilities_from_certification_direct_sum_measurements(u_counts)
+    return compute_probabilities_certification_direct_sum(u_counts)

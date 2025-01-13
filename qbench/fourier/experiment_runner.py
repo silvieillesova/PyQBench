@@ -22,11 +22,11 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_direct_sum_circuits,
-    compute_probabilities_from_direct_sum_measurements,
+    compute_probabilities_discrimination_direct_sum,
 )
 from qbench.schemes.postselection import (
     assemble_postselection_circuits,
-    compute_probabilities_from_postselection_measurements,
+    compute_probabilities_discrimination_postselection,
 )
 from ._components.components import FourierComponents
 from ._models import (
@@ -353,9 +353,9 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_from_postselection_measurements
+        compute_probabilities_postselection_measurements
         if sync_results.metadata.experiments.method.lower() == "postselection"
-        else compute_probabilities_from_direct_sum_measurements
+        else compute_probabilities_direct_sum_measurements
     )
 
     def _make_row(entry):

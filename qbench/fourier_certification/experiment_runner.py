@@ -18,11 +18,11 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_certification_direct_sum_circuits,
-    compute_probabilities_from_certification_direct_sum_measurements,
+    compute_probabilities_certification_direct_sum,
 )
 from qbench.schemes.postselection import (
     assemble_certification_postselection_circuits,
-    compute_probabilities_from_certification_postselection_measurements,
+    compute_probabilities_certification_postselection,
 )
 from ._components import FourierComponents
 from ._models import (
@@ -380,9 +380,9 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_from_certification_postselection_measurements
+        compute_probabilities_certification_postselection
         if sync_results.metadata.experiments.method.lower() == "postselection"
-        else compute_probabilities_from_certification_direct_sum_measurements
+        else compute_probabilities_certification_direct_sum
     )
 
     def _make_row(entry):
