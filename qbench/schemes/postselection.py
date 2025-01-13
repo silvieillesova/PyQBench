@@ -143,7 +143,7 @@ def compute_probabilities_certification_postselection(
     return (u_v1_counts.get("10",0) + u_v0_counts.get("00",0)) / (u_v0_counts.get("00",0) + u_v0_counts.get("01",0)+ u_v1_counts.get("10",0) + u_v1_counts.get("11",0))
 
 
-def benchmark_using_postselection(
+def benchmark_discrimination_using_postselection(
     backend: Union[BackendV1, BackendV2],
     target: int,
     ancilla: int,

@@ -108,7 +108,7 @@ def compute_probabilities_certification_direct_sum(
     /  num_shots_per_measurement )
 
 
-def benchmark_using_direct_sum(
+def benchmark_discrimination_using_direct_sum(
     backend: Union[BackendV1, BackendV2],
     target: int,
     ancilla: int,
