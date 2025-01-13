@@ -1,1 +1,2 @@
-name: aer_simulator
+provider: "qiskit.providers.aer:AerProvider"
+name: "aer_simulator"

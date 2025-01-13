@@ -18,11 +18,11 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_certification_direct_sum_circuits,
-    compute_probabilities_certification_direct_sum,
+    compute_probabilities_from_certification_direct_sum_measurements,
 )
 from qbench.schemes.postselection import (
     assemble_certification_postselection_circuits,
-    compute_probabilities_certification_postselection,
+    compute_probabilities_from_certification_postselection_measurements,
 )
 from ._components import FourierComponents
 from ._models import (
@@ -97,7 +97,7 @@ def _mitigate(
 
     mitigator.cals_from_matrices(matrices)
     result = mitigator.apply_correction(counts, [target, ancilla])
-    
+
     # Probability distribution
     result = result.nearest_probability_distribution()
     # Wrap value in native floats, otherwise we get serialization problems
@@ -380,9 +380,9 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_certification_postselection
+        compute_probabilities_from_certification_postselection_measurements
         if sync_results.metadata.experiments.method.lower() == "postselection"
-        else compute_probabilities_certification_direct_sum
+        else compute_probabilities_from_certification_direct_sum_measurements
     )
 
     def _make_row(entry):

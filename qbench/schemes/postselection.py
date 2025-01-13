@@ -31,7 +31,7 @@ def _construct_black_box_circuit(
     return circuit
 
 
-def assemble_circuits_discrimination_postselection(
+def assemble_postselection_circuits(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -65,7 +65,7 @@ def assemble_circuits_discrimination_postselection(
     }
 
 
-def assemble_circuits_certification_postselection(
+def assemble_certification_postselection_circuits(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -97,7 +97,7 @@ def assemble_circuits_certification_postselection(
     }
 
 
-def compute_probabilities_discrimination_postselection(
+def compute_probabilities_from_postselection_measurements(
     id_v0_counts: MeasurementsDict,
     id_v1_counts: MeasurementsDict,
     u_v0_counts: MeasurementsDict,
@@ -123,7 +123,7 @@ def compute_probabilities_discrimination_postselection(
         + id_v1_counts.get("11", 0) / marginal_counts(id_v1_counts, [0]).get("1", 0)
     ) / 4
 
-def compute_probabilities_certification_postselection(
+def compute_probabilities_from_certification_postselection_measurements(
     u_v0_counts: MeasurementsDict,
     u_v1_counts: MeasurementsDict,
 ) -> float:
@@ -143,7 +143,7 @@ def compute_probabilities_certification_postselection(
     return (u_v1_counts.get("10",0) + u_v0_counts.get("00",0)) / (u_v0_counts.get("00",0) + u_v0_counts.get("01",0)+ u_v1_counts.get("10",0) + u_v1_counts.get("11",0))
 
 
-def benchmark_discrimination_using_postselection(
+def benchmark_using_postselection(
     backend: Union[BackendV1, BackendV2],
     target: int,
     ancilla: int,
@@ -183,7 +183,7 @@ def benchmark_discrimination_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_circuits_discrimination_postselection(
+    circuits = assemble_certification_postselection_circuits(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
@@ -197,7 +197,7 @@ def benchmark_discrimination_using_postselection(
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_discrimination_postselection(
+    return compute_probabilities_from_postselection_measurements(
         counts["id_v0"], counts["id_v1"], counts["u_v0"], counts["u_v1"]
     )
 
@@ -241,7 +241,7 @@ def benchmark_certification_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_circuits_certification_postselection(
+    circuits = assemble_certification_postselection_circuits(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
@@ -255,6 +255,6 @@ def benchmark_certification_using_postselection(
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_certification_postselection(
+    return compute_probabilities_from_certification_postselection_measurements(
         counts["u_v0"], counts["u_v1"]
     )
