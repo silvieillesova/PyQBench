@@ -21,11 +21,11 @@ from qbench.common_models import Backend, BackendDescription
 from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
-    assemble_direct_sum_circuits,
+    assemble_circuits_discrimination_direct_sum,
     compute_probabilities_discrimination_direct_sum,
 )
 from qbench.schemes.postselection import (
-    assemble_postselection_circuits,
+    assemble_circuits_discrimination_postselectio,
     compute_probabilities_discrimination_postselection,
 )
 from ._components.components import FourierComponents
@@ -154,7 +154,7 @@ def _collect_circuits_and_keys(
     """Construct all circuits needed for the experiment and assign them unique keys."""
 
     def _asemble_postselection(target: int, ancilla: int) -> Dict[str, QuantumCircuit]:
-        return assemble_postselection_circuits(
+        return assemble_circuits_discrimination_postselection(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_dag=components.v0_dag,
@@ -164,7 +164,7 @@ def _collect_circuits_and_keys(
         )
 
     def _asemble_direct_sum(target: int, ancilla: int) -> Dict[str, QuantumCircuit]:
-        return assemble_direct_sum_circuits(
+        return assemble_circuits_discrimination_direct_sum(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_v1_direct_sum_dag=components.v0_v1_direct_sum_dag,
