@@ -5,6 +5,7 @@ from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction
 from qiskit.providers import BackendV1, BackendV2
 from qiskit.result import marginal_counts
+from qiskit_ibm_runtime import SamplerV2
 
 from ..common_models import MeasurementsDict
 from ._utils import remap_qubits
@@ -155,10 +156,15 @@ def benchmark_using_direct_sum(
         ancilla=ancilla,
     )
 
-    id_counts = backend.run(circuits["id"], shots=num_shots_per_measurement).result().get_counts()
-    u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
+    # id_counts = backend.run(circuits["id"], shots=num_shots_per_measurement).result().get_counts()
+    # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
+
+    sampler = SamplerV2(mode=backend)
+    id_counts = sampler.run([circuits['id']], shots=num_shots_per_measurement).result().get_counts()
+    u_counts = sampler.run([circuits['u']], shots=num_shots_per_measurement).result().get_counts()
 
     return compute_probabilities_from_direct_sum_measurements(id_counts, u_counts)
+
 
 def benchmark_certification_using_direct_sum(
     backend: Union[BackendV1, BackendV2],
@@ -207,6 +213,9 @@ def benchmark_certification_using_direct_sum(
         ancilla=ancilla,
     )
 
-    u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
+    # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
+
+    sampler = SamplerV2(mode=backend)
+    u_counts = sampler.run([circuits['u']], shots=num_shots_per_measurement).result().get_counts()
 
     return compute_probabilities_from_certification_direct_sum_measurements(u_counts)

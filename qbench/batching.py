@@ -5,6 +5,7 @@ from typing import Any, Iterable, NamedTuple, Optional, Sequence
 
 from qiskit import QuantumCircuit
 from qiskit.providers import JobV1
+from qiskit_ibm_runtime import SamplerV2, RuntimeJob
 from tqdm import tqdm
 
 from .common_models import Backend
@@ -16,7 +17,7 @@ class BatchWithKey(NamedTuple):
 
 
 class BatchJob(NamedTuple):
-    job: JobV1
+    job: JobV1 | RuntimeJob
     keys: Sequence[Any]
 
 
@@ -74,10 +75,17 @@ def execute_in_batches(
      order of `keys`.
     """
     batches = batch_circuits_with_keys(circuits, keys, batch_size)
-    result = (
-        BatchJob(backend.run(batch.circuits, shots=shots, **kwargs), batch.keys)
-        for batch in batches
-    )
+
+    sampler = SamplerV2(mode=backend)
+
+    # result = (
+    #     BatchJob(backend.run(batch.circuits, shots=shots, **kwargs), batch.keys)
+    #     for batch in batches
+    # )
+
+    result = (BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys)
+              for batch in batches)
+
     if show_progress:
         result = tqdm(result, total=len(batches))
     return result

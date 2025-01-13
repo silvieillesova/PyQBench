@@ -3,10 +3,24 @@ from functools import singledispatch
 from typing import Sequence
 
 from qiskit.providers import JobV1
+from qiskit_ibm_provider import IBMProvider
 #from qiskit.providers.ibmq import IBMQBackend, IBMQJob
 from qiskit_ibm_runtime import QiskitRuntimeService
+import os
 
-service = QiskitRuntimeService()
+
+# TODO IBMQ_TOKEN is deprecated by now
+IBMQ_TOKEN = os.getenv('IBMQ_TOKEN')
+QISKIT_IBM_TOKEN = os.getenv('QISKIT_IBM_TOKEN')
+
+# TODO Maybe stop supporting IBMQ_TOKEN variable?
+if sum(e in os.environ for e in ('QISKIT_IBM_TOKEN', 'IBMQ_TOKEN')) == 0:
+    raise ValueError('Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or '
+                     'IBMQ_TOKEN (deprecated)!')
+elif 'IBMQ_TOKEN' in os.environ and not 'QISKIT_IBM_TOKEN' in os.environ:
+    QISKIT_IBM_TOKEN = IBMQ_TOKEN
+
+service = QiskitRuntimeService('ibm_quantum', QISKIT_IBM_TOKEN)
 
 @singledispatch
 def retrieve_jobs(job_ids: Sequence[str]) -> Sequence[JobV1]:
@@ -22,4 +36,4 @@ def retrieve_jobs(job_ids: Sequence[str]) -> Sequence[JobV1]:
 
 #@retrieve_jobs.register
 #def _retrieve_jobs_from_ibmq(backend: IBMQBackend, job_ids: Sequence[str]) -> Sequence[IBMQJob]:
-    #return backend.jobs(db_filter={"id": {"inq": job_ids}}, limit=len(job_ids))
+#return backend.jobs(db_filter={"id": {"inq": job_ids}}, limit=len(job_ids))

@@ -268,7 +268,7 @@ def run_experiment(
             ancilla=ancilla,
             )
             for circuit_name, circuit in cos.items():
-                circuit_key_pairs += [(circuit,
+                circuit_key_pairs += [(transpile(circuit, backend=backend),
                 (target, ancilla, circuit_name, float(phi), experiments.delta),)]
     else:
         circuit_key_pairs = []
