@@ -342,7 +342,7 @@ def fetch_statuses(async_results: FourierCertificationAsyncResult) -> Dict[str, 
     jobs = retrieve_jobs(job_ids)
     logger.info("Done")
 
-    return dict(Counter(job.status().name for job in jobs))
+    return dict(Counter(str(job.status()) for job in jobs))
 
 
 def resolve_results(
