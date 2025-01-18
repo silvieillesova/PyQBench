@@ -1,7 +1,7 @@
 """Module implementing experiment using direct sum of V0† ⊕ V1†."""
 from typing import Dict, Union
 
-from qiskit import QuantumCircuit
+from qiskit import QuantumCircuit, transpile
 from qiskit.circuit import Instruction
 from qiskit.providers import BackendV1, BackendV2
 from qiskit.result import marginal_counts
@@ -48,6 +48,7 @@ def assemble_direct_sum_circuits(
         "u": remap_qubits(u_circuit, {0: target, 1: ancilla}).decompose(),
     }
 
+
 def assemble_certification_direct_sum_circuits(
     target: int,
     ancilla: int,
@@ -80,6 +81,7 @@ def assemble_certification_direct_sum_circuits(
         "u": remap_qubits(u_circuit, {0: target, 1: ancilla}).decompose(),
     }
 
+
 def compute_probabilities_from_direct_sum_measurements(
     id_counts: MeasurementsDict, u_counts: MeasurementsDict
 ) -> float:
@@ -105,11 +107,10 @@ def compute_probabilities_from_certification_direct_sum_measurements(
     :return: probability of distinguishing between u and identity measurements.
     """
     num_shots_per_measurement = sum(u_counts.values())
-    return (marginal_counts(u_counts, [1]).get("0", 0)
-    /  num_shots_per_measurement )
+    return marginal_counts(u_counts, [1]).get("0", 0) / num_shots_per_measurement
 
 
-def benchmark_using_direct_sum(
+def benchmark_discrimination_using_direct_sum(
     backend: Union[BackendV1, BackendV2],
     target: int,
     ancilla: int,
@@ -160,8 +161,10 @@ def benchmark_using_direct_sum(
     # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
 
     sampler = SamplerV2(mode=backend)
-    id_counts = sampler.run([circuits['id']], shots=num_shots_per_measurement).result().get_counts()
-    u_counts = sampler.run([circuits['u']], shots=num_shots_per_measurement).result().get_counts()
+    id_counts = sampler.run([transpile(circuits['id'], backend=backend)],
+                            shots=num_shots_per_measurement).result().get_counts()
+    u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
+                           shots=num_shots_per_measurement).result().get_counts()
 
     return compute_probabilities_from_direct_sum_measurements(id_counts, u_counts)
 
@@ -216,6 +219,7 @@ def benchmark_certification_using_direct_sum(
     # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
 
     sampler = SamplerV2(mode=backend)
-    u_counts = sampler.run([circuits['u']], shots=num_shots_per_measurement).result().get_counts()
+    u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
+                           shots=num_shots_per_measurement).result().get_counts()
 
     return compute_probabilities_from_certification_direct_sum_measurements(u_counts)

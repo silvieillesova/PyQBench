@@ -1,10 +1,11 @@
 """Module implementing postselection experiment."""
 from typing import Dict, Union
 
-from qiskit import QuantumCircuit
+from qiskit import QuantumCircuit, transpile
 from qiskit.circuit import Instruction
 from qiskit.providers import BackendV1, BackendV2
 from qiskit.result import marginal_counts
+from qiskit_ibm_runtime import SamplerV2
 
 from ..common_models import MeasurementsDict
 from ._utils import remap_qubits
@@ -31,7 +32,7 @@ def _construct_black_box_circuit(
     return circuit
 
 
-def assemble_postselection_circuits(
+def assemble_circuits_discrimination_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -65,7 +66,7 @@ def assemble_postselection_circuits(
     }
 
 
-def assemble_certification_postselection_circuits(
+def assemble_circuits_certification_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -97,7 +98,7 @@ def assemble_certification_postselection_circuits(
     }
 
 
-def compute_probabilities_from_postselection_measurements(
+def compute_probabilities_discrimination_postselection(
     id_v0_counts: MeasurementsDict,
     id_v1_counts: MeasurementsDict,
     u_v0_counts: MeasurementsDict,
@@ -123,7 +124,7 @@ def compute_probabilities_from_postselection_measurements(
         + id_v1_counts.get("11", 0) / marginal_counts(id_v1_counts, [0]).get("1", 0)
     ) / 4
 
-def compute_probabilities_from_certification_postselection_measurements(
+def compute_probabilities_certification_postselection(
     u_v0_counts: MeasurementsDict,
     u_v1_counts: MeasurementsDict,
 ) -> float:
@@ -143,7 +144,7 @@ def compute_probabilities_from_certification_postselection_measurements(
     return (u_v1_counts.get("10",0) + u_v0_counts.get("00",0)) / (u_v0_counts.get("00",0) + u_v0_counts.get("01",0)+ u_v1_counts.get("10",0) + u_v1_counts.get("11",0))
 
 
-def benchmark_using_postselection(
+def benchmark_discrimination_using_postselection(
     backend: Union[BackendV1, BackendV2],
     target: int,
     ancilla: int,
@@ -183,7 +184,7 @@ def benchmark_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_certification_postselection_circuits(
+    circuits = assemble_circuits_discrimination_postselection(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
@@ -192,14 +193,17 @@ def benchmark_using_postselection(
         ancilla=ancilla,
     )
 
+    sampler = SamplerV2(mode=backend)
     counts = {
-        key: backend.run(circuit, shots=num_shots_per_measurement).result().get_counts()
+        key: sampler.run([transpile(circuit, backend=backend)],
+                         shots=num_shots_per_measurement).result().get_counts()
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_from_postselection_measurements(
+    return compute_probabilities_discrimination_postselection(
         counts["id_v0"], counts["id_v1"], counts["u_v0"], counts["u_v1"]
     )
+
 
 def benchmark_certification_using_postselection(
     backend: Union[BackendV1, BackendV2],
@@ -241,7 +245,7 @@ def benchmark_certification_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_certification_postselection_circuits(
+    circuits = assemble_circuits_certification_postselection(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
@@ -250,11 +254,13 @@ def benchmark_certification_using_postselection(
         ancilla=ancilla,
     )
 
+    sampler = SamplerV2(mode=backend)
     counts = {
-        key: backend.run(circuit, shots=num_shots_per_measurement).result().get_counts()
+        key: sampler.run([transpile(circuit, backend=backend)],
+                         shots=num_shots_per_measurement).result().get_counts()
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_from_certification_postselection_measurements(
+    return compute_probabilities_certification_postselection(
         counts["u_v0"], counts["u_v1"]
     )
