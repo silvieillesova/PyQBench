@@ -26,7 +26,7 @@ from qbench.schemes.direct_sum import (
 )
 from qbench.schemes.postselection import (
     assemble_circuits_discrimination_postselection,
-    compute_probabilities_certification_postselection,
+    compute_probabilities_discrimination_postselection,
 )
 from ._components.components import FourierComponents
 from ._models import (
@@ -353,7 +353,7 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_certification_postselection
+        compute_probabilities_discrimination_postselection
         if sync_results.metadata.experiments.method.lower() == "postselection"
         else compute_probabilities_from_direct_sum_measurements
     )
