@@ -137,3 +137,5 @@ resolved.yml
 results.yml
 resolved.csv
 results.csv
+*.yml
+*.csv
