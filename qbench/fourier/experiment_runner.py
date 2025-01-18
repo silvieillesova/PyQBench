@@ -121,7 +121,7 @@ def _extract_result_from_job(
     :return: object containing results or None if the provided job was not successful.
     """
     try:
-        result = {"name": name, "histogram": job.result().get_counts()[i]}
+        result = {"name": name, "histogram": job.result()[i].join_data().get_counts()}
     except QiskitError:
         return None
     try:
