@@ -25,8 +25,8 @@ from qbench.schemes.direct_sum import (
     compute_probabilities_from_direct_sum_measurements,
 )
 from qbench.schemes.postselection import (
-    assemble_postselection_circuits,
-    compute_probabilities_from_postselection_measurements,
+    assemble_circuits_discrimination_postselection,
+    compute_probabilities_certification_postselection,
 )
 from ._components.components import FourierComponents
 from ._models import (
@@ -154,7 +154,7 @@ def _collect_circuits_and_keys(
     """Construct all circuits needed for the experiment and assign them unique keys."""
 
     def _asemble_postselection(target: int, ancilla: int) -> Dict[str, QuantumCircuit]:
-        return assemble_postselection_circuits(
+        return assemble_circuits_discrimination_postselection(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_dag=components.v0_dag,
@@ -353,7 +353,7 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_from_postselection_measurements
+        compute_probabilities_certification_postselection
         if sync_results.metadata.experiments.method.lower() == "postselection"
         else compute_probabilities_from_direct_sum_measurements
     )

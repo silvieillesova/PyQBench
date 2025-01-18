@@ -22,8 +22,8 @@ from qbench.schemes.direct_sum import (
     compute_probabilities_from_certification_direct_sum_measurements,
 )
 from qbench.schemes.postselection import (
-    assemble_certification_postselection_circuits,
-    compute_probabilities_from_certification_postselection_measurements,
+    assemble_circuits_certification_postselection,
+    compute_probabilities_certification_postselection,
 )
 from ._components import FourierComponents
 from ._models import (
@@ -156,7 +156,7 @@ def _collect_circuits_and_keys(
     """Construct all circuits needed for the experiment and assign them unique keys."""
 
     def _asemble_postselection(target: int, ancilla: int) -> Dict[str, QuantumCircuit]:
-        return assemble_certification_postselection_circuits(
+        return assemble_circuits_certification_postselection(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_dag=components.v0_dag,
@@ -261,7 +261,7 @@ def run_experiment(
         circuit_key_pairs = []
         for (target, ancilla, phi) in tqdm(list(experiments.enumerate_experiment_labels())):
             components = FourierComponents(phi, experiments.delta, gateset=experiments.gateset)
-            cos = assemble_certification_postselection_circuits(
+            cos = assemble_circuits_certification_postselection(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_dag=components.v0_dag,
@@ -382,7 +382,7 @@ def resolve_results(
 
 def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFrame:
     compute_probabilities = (
-        compute_probabilities_from_certification_postselection_measurements
+        compute_probabilities_certification_postselection
         if sync_results.metadata.experiments.method.lower() == "postselection"
         else compute_probabilities_from_certification_direct_sum_measurements
     )

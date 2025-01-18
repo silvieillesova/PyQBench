@@ -32,7 +32,7 @@ def _construct_black_box_circuit(
     return circuit
 
 
-def assemble_circuits_discrimination_postselection(
+def assemble_circuits_certification_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -66,7 +66,7 @@ def assemble_circuits_discrimination_postselection(
     }
 
 
-def assemble_circuits_certification_postselection(
+def assemble_circuits_discrimination_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -123,6 +123,7 @@ def compute_probabilities_discrimination_postselection(
         + id_v0_counts.get("10", 0) / marginal_counts(id_v0_counts, [0]).get("0", 0)
         + id_v1_counts.get("11", 0) / marginal_counts(id_v1_counts, [0]).get("1", 0)
     ) / 4
+
 
 def compute_probabilities_certification_postselection(
     u_v0_counts: MeasurementsDict,
@@ -245,7 +246,7 @@ def benchmark_certification_using_postselection(
        for i=0,1, j=0,1 where M0 = U, M1 = identity.
        Refer to the paper for details how the terminal measurements are interpreted.
     """
-    circuits = assemble_circuits_certification_postselection(
+    circuits = assemble_circuits_discrimination_postselection(
         state_preparation=state_preparation,
         u_dag=u_dag,
         v0_dag=v0_dag,
