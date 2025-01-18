@@ -196,7 +196,7 @@ def benchmark_discrimination_using_postselection(
     sampler = SamplerV2(mode=backend)
     counts = {
         key: sampler.run([transpile(circuit, backend=backend)],
-                         shots=num_shots_per_measurement).result().get_counts()
+                         shots=num_shots_per_measurement).result()[0].join_data().get_counts()
         for key, circuit in circuits.items()
     }
 
@@ -255,9 +255,10 @@ def benchmark_certification_using_postselection(
     )
 
     sampler = SamplerV2(mode=backend)
+
     counts = {
         key: sampler.run([transpile(circuit, backend=backend)],
-                         shots=num_shots_per_measurement).result().get_counts()
+                         shots=num_shots_per_measurement).result()[0].join_data().get_counts()
         for key, circuit in circuits.items()
     }
 

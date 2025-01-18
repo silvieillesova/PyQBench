@@ -157,14 +157,11 @@ def benchmark_discrimination_using_direct_sum(
         ancilla=ancilla,
     )
 
-    # id_counts = backend.run(circuits["id"], shots=num_shots_per_measurement).result().get_counts()
-    # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
-
     sampler = SamplerV2(mode=backend)
     id_counts = sampler.run([transpile(circuits['id'], backend=backend)],
-                            shots=num_shots_per_measurement).result().get_counts()
+                            shots=num_shots_per_measurement).result()[0].join_data().get_counts()
     u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
-                           shots=num_shots_per_measurement).result().get_counts()
+                           shots=num_shots_per_measurement).result()[0].join_data().get_counts()
 
     return compute_probabilities_from_direct_sum_measurements(id_counts, u_counts)
 
@@ -216,10 +213,8 @@ def benchmark_certification_using_direct_sum(
         ancilla=ancilla,
     )
 
-    # u_counts = backend.run(circuits["u"], shots=num_shots_per_measurement).result().get_counts()
-
     sampler = SamplerV2(mode=backend)
     u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
-                           shots=num_shots_per_measurement).result().get_counts()
+                           shots=num_shots_per_measurement).result()[0].join_data().get_counts()
 
     return compute_probabilities_from_certification_direct_sum_measurements(u_counts)
