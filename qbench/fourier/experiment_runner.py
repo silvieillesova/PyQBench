@@ -21,7 +21,7 @@ from qbench.common_models import Backend, BackendDescription
 from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
-    assemble_direct_sum_circuits,
+    assemble_discrimination_direct_sum_circuits,
     compute_probabilities_from_direct_sum_measurements,
 )
 from qbench.schemes.postselection import (
@@ -164,7 +164,7 @@ def _collect_circuits_and_keys(
         )
 
     def _asemble_direct_sum(target: int, ancilla: int) -> Dict[str, QuantumCircuit]:
-        return assemble_direct_sum_circuits(
+        return assemble_discrimination_direct_sum_circuits(
             state_preparation=components.state_preparation,
             u_dag=components.u_dag,
             v0_v1_direct_sum_dag=components.v0_v1_direct_sum_dag,

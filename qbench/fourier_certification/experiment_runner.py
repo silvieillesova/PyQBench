@@ -393,7 +393,7 @@ def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFra
             entry.ancilla,
             entry.phi,
             entry.delta,
-            certification_probability_upper_bound(entry.phi,entry.delta),
+            certification_probability_upper_bound(entry.phi, entry.delta),
             compute_probabilities(
                 **{f"{info.name}_counts": info.histogram for info in entry.results_per_circuit}
             ),
