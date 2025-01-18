@@ -32,7 +32,7 @@ def _construct_black_box_circuit(
     return circuit
 
 
-def assemble_circuits_certification_postselection(
+def assemble_circuits_discrimination_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -66,7 +66,7 @@ def assemble_circuits_certification_postselection(
     }
 
 
-def assemble_circuits_discrimination_postselection(
+def assemble_circuits_certification_postselection(
     target: int,
     ancilla: int,
     state_preparation: Instruction,
@@ -74,7 +74,7 @@ def assemble_circuits_discrimination_postselection(
     v0_dag: Instruction,
     v1_dag: Instruction,
 ) -> Dict[str, QuantumCircuit]:
-    """Assemble circuits required for running Fourier discrimination experiment using postselection.
+    """Assemble circuits required for running Fourier certification experiment using postselection.
 
     :param target: index of qubit measured either in Z-basis or the alternative one.
     :param ancilla: index of auxiliary qubit.
