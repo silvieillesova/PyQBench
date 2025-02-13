@@ -1,6 +1,8 @@
 name: PyQBench
 channels:
   - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=5.1=1_gnu
@@ -196,6 +198,7 @@ dependencies:
       - pydantic-core==2.18.2
       - pyjwt==2.8.0
       - pyparsing==3.1.2
+      - pyqbench==0.1.dev113+gdb974ec.d20250213
       - pyspnego==0.10.2
       - pytest==8.3.3
       - qiskit==1.3.1
