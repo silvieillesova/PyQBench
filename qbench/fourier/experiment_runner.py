@@ -13,6 +13,9 @@ from tqdm import tqdm
 
 import sys
 from pathlib import Path
+
+from ._components.__init__ import discrimination_probability_upper_bound
+
 sys.path.append(str(Path(sys.argv[0]).resolve().parent.parent))
 
 
@@ -363,6 +366,7 @@ def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFr
             entry.target,
             entry.ancilla,
             entry.phi,
+            discrimination_probability_upper_bound(entry.phi),
             compute_probabilities(
                 **{f"{info.name}_counts": info.histogram for info in entry.results_per_circuit}
             ),
@@ -385,9 +389,9 @@ def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFr
 
     # We assume that either all circuits have mitigation info, or none of them has
     columns = (
-        ["target", "ancilla", "phi", "disc_prob"]
+        ["target", "ancilla", "phi", "ideal_prob", "disc_prob"]
         if len(rows[0]) == 4
-        else ["target", "ancilla", "phi", "disc_prob", "mit_disc_prob"]
+        else ["target", "ancilla", "phi", "ideal_prob", "disc_prob", "mit_disc_prob"]
     )
 
     result = pd.DataFrame(data=rows, columns=columns)
