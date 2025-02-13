@@ -125,7 +125,7 @@ def certification_probability_upper_bound(
     phi: Union[float, np.ndarray],
     delta: float
 ) -> Union[float, np.ndarray]:
-    """Compute the minimized probability of type II error in certificatio scheme
+    """Compute the minimized probability of type II error in certification scheme
       between measurements in P_U and P_1.
 
     :param phi: angle of measurement P_U to be certified from P_1.
