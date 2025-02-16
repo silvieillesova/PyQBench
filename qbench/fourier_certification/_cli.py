@@ -41,7 +41,15 @@ def _resolve(args: Namespace) -> None:
     """Function executed when qbench disc-fourier resolve is invoked."""
     results = FourierCertificationAsyncResult(**safe_load(args.async_results))
     resolved = resolve_results(results)
-    safe_dump(resolved.dict(), args.output, sort_keys=False)
+
+    res_dict = resolved.dict()
+
+    # Remove 'name: u' from the output
+    for e in res_dict['data']:
+        for res in e['results_per_circuit']:
+            del res['name']
+
+    safe_dump(res_dict, args.output, sort_keys=False)
 
 
 def _tabulate(args: Namespace) -> None:

@@ -196,7 +196,7 @@ def _iter_batches(batches: Iterable[BatchJob]) -> Iterable[Tuple[int, CircuitKey
     """Iterate batches in a flat manner.
 
     The returned iterable yields triples of the form (i, key, job) where:
-    - key is the key in one one of the batches
+    - key is the key in one of the batches
     - i is its index in the corresponding batch
     - job is a job comprising this batch
     """
