@@ -56,7 +56,7 @@ def _log_fourier_experiments(experiments: FourierExperimentSet) -> None:
     logger.info("Running set of Fourier-certification experiments")
     logger.info("Number of qubit-pairs: %d", len(experiments.qubits))
     logger.info("Number of phi values: %d", experiments.angles.num_steps)
-    logger.info("Statistical significance: %d", experiments.delta)
+    logger.info("Statistical significance: %s", '{0:g}'.format(experiments.delta))
     logger.info("Number of shots per circuit: %d", experiments.num_shots)
     logger.info("Probability estimation method: %s", experiments.method)
     logger.info("Gateset: %s", experiments.gateset)
