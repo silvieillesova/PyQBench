@@ -18,12 +18,9 @@ Additionally, this module provides a function computing the minimized probabilit
 type II error.
 
 """
-from typing import Union
-
-import numpy as np
 
 from ._cli import add_fourier_certification_parser
-from ._components import FourierComponents
+from ._components.components import FourierComponents
 from ._models import (
     FourierCertificationAsyncResult,
     FourierCertificationSyncResult,

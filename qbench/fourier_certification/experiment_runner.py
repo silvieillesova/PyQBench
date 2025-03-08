@@ -25,7 +25,7 @@ from qbench.schemes.postselection import (
     assemble_circuits_certification_postselection,
     compute_probabilities_certification_postselection,
 )
-from ._components import FourierComponents
+from ._components.components import FourierComponents
 from ._models import (
     BatchResult,
     FourierCertificationAsyncResult,

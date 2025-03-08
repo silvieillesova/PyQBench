@@ -3,12 +3,8 @@ from functools import singledispatch
 from typing import Sequence
 
 from qiskit.providers import JobV1
-from qiskit_ibm_provider import IBMProvider
-#from qiskit.providers.ibmq import IBMQBackend, IBMQJob
 from qiskit_ibm_runtime import QiskitRuntimeService
 import os
-
-from tests.test_limits import IQP_API_TOKEN
 
 # TODO IBMQ_TOKEN is deprecated by now
 IBMQ_TOKEN = os.getenv('IBMQ_TOKEN')
@@ -36,8 +32,3 @@ def retrieve_jobs(job_ids: Sequence[str]) -> Sequence[JobV1]:
     """
 
     return [service.job(job_id) for job_id in job_ids]
-
-
-#@retrieve_jobs.register
-#def _retrieve_jobs_from_ibmq(backend: IBMQBackend, job_ids: Sequence[str]) -> Sequence[IBMQJob]:
-#return backend.jobs(db_filter={"id": {"inq": job_ids}}, limit=len(job_ids))

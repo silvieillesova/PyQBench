@@ -54,7 +54,15 @@ def _resolve(args: Namespace) -> None:
 
 def _tabulate(args: Namespace) -> None:
     """Function executed when qbench disc-fourier tabulate is invoked."""
-    results = FourierCertificationSyncResult(**safe_load(args.sync_results))
+    t = safe_load(args.sync_results)
+
+    # Add dummy name for the results
+    #TODO Should we go for another datatype specific for certification?
+    for e in t['data']:
+        for res in e['results_per_circuit']:
+            res['name'] = 'u'
+    # results = FourierCertificationSyncResult(**safe_load(args.sync_results))
+    results = FourierCertificationSyncResult(**t)
     table = tabulate_results(results)
     table.to_csv(args.output, index=False)
 
