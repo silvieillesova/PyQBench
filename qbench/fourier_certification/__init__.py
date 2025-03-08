@@ -22,7 +22,7 @@ from typing import Union
 
 import numpy as np
 
-from ._cli import add_fourier_parser_certification
+from ._cli import add_fourier_certification_parser
 from ._components import FourierComponents
 from ._models import (
     FourierCertificationAsyncResult,
@@ -32,7 +32,7 @@ from ._models import (
 
 
 __all__ = [
-    "add_fourier_parser_certification",
+    "add_fourier_certification_parser",
     "FourierComponents",
     "FourierCertificationAsyncResult",
     "FourierCertificationSyncResult",

@@ -59,7 +59,7 @@ def _tabulate(args: Namespace) -> None:
     table.to_csv(args.output, index=False)
 
 
-def add_fourier_parser_certification(parent_parser) -> None:
+def add_fourier_certification_parser(parent_parser) -> None:
     """Add cert-fourier parser to the parent parser.
 
     The added parser will have the following subcommands:
