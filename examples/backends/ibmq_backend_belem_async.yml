@@ -1,6 +1,0 @@
-name: ibmq-belem
-asynchronous: true
-provider:
-  hub: ibmq-hub
-  group: open
-  project: main
