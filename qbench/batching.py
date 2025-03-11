@@ -5,7 +5,7 @@ from typing import Any, Iterable, NamedTuple, Optional, Sequence
 
 from qiskit import QuantumCircuit
 from qiskit.providers import JobV1
-from qiskit_ibm_runtime import SamplerV2, RuntimeJob
+from qiskit_ibm_runtime import SamplerV2, RuntimeJob, RuntimeJobV2
 from tqdm import tqdm
 
 from .common_models import Backend
@@ -17,7 +17,7 @@ class BatchWithKey(NamedTuple):
 
 
 class BatchJob(NamedTuple):
-    job: JobV1 | RuntimeJob
+    job: JobV1 | RuntimeJob | RuntimeJobV2
     keys: Sequence[Any]
 
 

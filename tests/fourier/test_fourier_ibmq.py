@@ -7,8 +7,6 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 
 from qbench.fourier import FourierComponents
 
-service = QiskitRuntimeService()
-
 
 def _assert_can_be_run(backend, instruction: Instruction):
     circuit = QuantumCircuit(instruction.num_qubits)
@@ -22,6 +20,7 @@ def _assert_can_be_run(backend, instruction: Instruction):
 @pytest.fixture(scope="module")
 def ibmq():
     if sum(e in os.environ for e in ('QISKIT_IBM_TOKEN', 'IBMQ_TOKEN', 'IQP_API_TOKEN')) > 0:
+        service = QiskitRuntimeService()
         return service.least_busy()
 
     raise ValueError('Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or '

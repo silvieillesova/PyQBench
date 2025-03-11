@@ -3,7 +3,8 @@ from functools import singledispatch
 from typing import NamedTuple, Optional
 
 from qiskit_aer import AerSimulator
-from qiskit_ibm_runtime import QiskitRuntimeService, IBMBackend
+from qiskit_ibm_runtime import IBMBackend as runtime_IBMBackend
+from qiskit_ibm_provider.ibm_backend import IBMBackend as provider_IBMBackend
 from qiskit_braket_provider import AWSBraketBackend
 
 from .testing import MockSimulator
@@ -43,7 +44,15 @@ def _get_limits_for_aws_backend(backend: AWSBraketBackend):
 
 
 @get_limits.register
-def _get_limits_for_ibmq_backend(backend: IBMBackend):
+def _get_limits_for_runtime_ibm_backend(backend: runtime_IBMBackend):
+    return Limits(
+        max_shots=backend.configuration().max_shots,
+        max_circuits=backend.configuration().max_experiments,
+    )
+
+
+@get_limits.register
+def _get_limits_for_provider_ibm_backend(backend: provider_IBMBackend):
     return Limits(
         max_shots=backend.configuration().max_shots,
         max_circuits=backend.configuration().max_experiments,
