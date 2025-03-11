@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-versions: ["3.8", "3.9", "3.10"]
+        python-versions: ["3.11"]
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,13 +28,13 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
 
-  run_quality_cheks:
+  run_quality_checks:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
       - uses: actions/checkout@v2
       - name: Install dependencies and the package
         run: |
