@@ -259,6 +259,7 @@ def run_experiment(
     components = FourierComponents(phi, gateset=experiments.gateset)
 
     backend = backend_description.create_backend()
+    print(f'Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}')
     logger.info(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
 
     circuits, keys = _collect_circuits_and_keys(experiments, components)
@@ -390,7 +391,7 @@ def tabulate_results(sync_results: FourierDiscriminationSyncResult) -> pd.DataFr
     # We assume that either all circuits have mitigation info, or none of them has
     columns = (
         ["target", "ancilla", "phi", "ideal_prob", "disc_prob"]
-        if len(rows[0]) == 4
+        if len(rows[0]) == 5
         else ["target", "ancilla", "phi", "ideal_prob", "disc_prob", "mit_disc_prob"]
     )
 

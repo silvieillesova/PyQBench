@@ -25,7 +25,7 @@ def _make_job_fail(job):
 def _add_mitigation_info(job):
     # All typing problems ignored below seem to be problems with BackendProperties and Nduv
     props = BackendProperties(
-        backend_name=job.backend().name(),
+        backend_name=job.backend().name,
         backend_version=job.backend().version,
         last_update_date=datetime.now(),  # type: ignore
         qubits=[

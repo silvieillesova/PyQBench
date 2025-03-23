@@ -10,7 +10,7 @@ from qbench.limits import get_limits
 from qbench.testing import MockSimulator
 
 # Specify the default AWS region
-os.environ['AWS_REGION'] = 'eu-central-1'
+os.environ['AWS_REGION'] = 'eu-west-2'
 
 # TODO IBMQ_TOKEN is deprecated by now
 IBMQ_TOKEN = os.getenv("IBMQ_TOKEN")

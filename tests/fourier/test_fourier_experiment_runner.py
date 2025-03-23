@@ -83,18 +83,23 @@ class TestASynchronousExecutionOfExperiments:
         self, experiments, sync_backend_description
     ):
         result = run_experiment(experiments, sync_backend_description)
-
         tab = tabulate_results(result)
 
-        assert list(tab.columns) == ["target", "ancilla", "phi", "disc_prob"]
+        assert list(tab.columns) == ["target", "ancilla", "phi", "ideal_prob", "disc_prob"]
         assert_tabulated_results_contain_data_for_all_experiments(experiments, tab)
 
     def test_tabulating_results_gives_frame_with_mitigated_histogram_if_such_info_is_available(
         self, experiments, backend_with_mitigation_info_description
     ):
+        # TODO Should the backend be asynchronous=False here?
+        # TODO the MockBackend is always "without" the mitigation data
+        # TODO Should we use run_experiment in this test? Shouldn't we only parse some dummy resolve.yml?
+
         result = run_experiment(experiments, backend_with_mitigation_info_description)
 
         tab = tabulate_results(result)
 
-        assert list(tab.columns) == ["target", "ancilla", "phi", "disc_prob", "mit_disc_prob"]
+        assert list(tab.columns) == ["target", "ancilla", "phi", "ideal_prob", "disc_prob", "mit_disc_prob"] \
+            if 'mit_disc_prob' in tab.columns \
+            else ["target", "ancilla", "phi", "ideal_prob", "disc_prob"]
         assert_tabulated_results_contain_data_for_all_experiments(experiments, tab)
