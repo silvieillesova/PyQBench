@@ -63,6 +63,7 @@ class TestSynchronousExecutionOfExperiments:
 
 
 class TestASynchronousExecutionOfExperiments:
+    @pytest.mark.aersim
     def test_number_of_fetched_statuses_corresponds_to_number_of_jobs(
         self, experiments, async_backend_description
     ):
@@ -71,6 +72,7 @@ class TestASynchronousExecutionOfExperiments:
 
         assert len(result.data) == sum(statuses.values())
 
+    @pytest.mark.aersim
     def test_resolving_results_gives_object_with_histograms_for_all_circuits(
         self, experiments, async_backend_description
     ):
