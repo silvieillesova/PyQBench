@@ -17,7 +17,6 @@ from qbench.common_models import (
     AnglesRange,
     BackendDescription,
     BaseModel,
-    Delta,
     Qubit,
     QubitsPair,
     StrictPositiveInt,

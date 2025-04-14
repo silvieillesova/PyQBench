@@ -95,7 +95,7 @@ class TestASynchronousExecutionOfExperiments:
     ):
         # TODO Should the backend be asynchronous=False here?
         # TODO the MockBackend is always "without" the mitigation data
-        # TODO Should we use run_experiment in this test? Shouldn't we only parse some dummy resolve.yml?
+        # TODO Should we use run_experiment? Shouldn't we only parse some dummy resolve.yml?
 
         result = run_experiment(experiments, backend_with_mitigation_info_description)
 

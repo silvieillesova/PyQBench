@@ -4,7 +4,7 @@ from typing import Union
 
 import numpy as np
 
-from . import _generic, _ibmq, _lucy, _rigetti
+# from . import _generic, _ibmq, _lucy, _rigetti
 
 
 def certification_probability_upper_bound(

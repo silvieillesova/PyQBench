@@ -15,12 +15,12 @@ IQP_API_TOKEN = os.getenv("IQP_API_TOKEN")
 # TODO Maybe stop supporting IBMQ_TOKEN variable?
 if sum(e in os.environ for e in ("QISKIT_IBM_TOKEN", "IBMQ_TOKEN", "IQP_API_TOKEN")) == 0:
     raise ValueError(
-        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or "
-        "IBMQ_TOKEN (deprecated)!"
+        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN "
+        "or IBMQ_TOKEN (deprecated)!"
     )
-elif "IBMQ_TOKEN" in os.environ and not "QISKIT_IBM_TOKEN" in os.environ:
+elif "IBMQ_TOKEN" in os.environ and "QISKIT_IBM_TOKEN" not in os.environ:
     QISKIT_IBM_TOKEN = IBMQ_TOKEN
-elif "IQP_API_TOKEN" in os.environ and not "QISKIT_IBM_TOKEN" in os.environ:
+elif "IQP_API_TOKEN" in os.environ and "QISKIT_IBM_TOKEN" not in os.environ:
     QISKIT_IBM_TOKEN = IQP_API_TOKEN
 
 service = QiskitRuntimeService("ibm_quantum", QISKIT_IBM_TOKEN)

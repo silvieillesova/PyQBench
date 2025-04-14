@@ -14,11 +14,6 @@ from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
 
-from ._components.__init__ import discrimination_probability_upper_bound
-
-sys.path.append(str(Path(sys.argv[0]).resolve().parent.parent))
-
-
 from qbench.batching import BatchJob, execute_in_batches
 from qbench.common_models import Backend, BackendDescription
 from qbench.jobs import retrieve_jobs
@@ -32,6 +27,7 @@ from qbench.schemes.postselection import (
     compute_probabilities_discrimination_postselection,
 )
 
+from ._components.__init__ import discrimination_probability_upper_bound
 from ._components.components import FourierComponents
 from ._models import (
     BatchResult,
@@ -42,6 +38,8 @@ from ._models import (
     ResultForCircuit,
     SingleResult,
 )
+
+sys.path.append(str(Path(sys.argv[0]).resolve().parent.parent))
 
 logger = getLogger("qbench")
 
@@ -335,7 +333,9 @@ def resolve_results(
      particular, it contains histograms of bitstrings for each circuit run during the experiment.
     """
     logger.info("Enabling account and creating backend")
-    backend = async_results.metadata.backend_description.create_backend()
+
+    # TODO Will we need to use the backend instance in the future?
+    # backend = async_results.metadata.backend_description.create_backend()
 
     logger.info("Reading jobs ids from the input file")
     job_ids = [entry.job_id for entry in cast(List[BatchResult], async_results.data)]

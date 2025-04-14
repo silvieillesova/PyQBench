@@ -23,14 +23,7 @@ $$
 
 """
 
-import sys
-from typing import Union
-
-import numpy as np
-
 from ._cli import add_fourier_parser
-
-# from ._components import FourierComponents
 from ._components.components import FourierComponents
 from ._models import (
     FourierDiscriminationAsyncResult,

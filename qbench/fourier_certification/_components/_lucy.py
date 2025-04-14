@@ -8,8 +8,6 @@ import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction
 
-from qbench.common_models import AnyParameter
-
 from ._lucy_and_ibmq_common import u_dag, v0_dag, v1_dag
 
 

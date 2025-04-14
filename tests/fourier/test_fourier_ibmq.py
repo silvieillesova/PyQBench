@@ -24,8 +24,8 @@ def ibmq():
         return service.least_busy()
 
     raise ValueError(
-        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or "
-        "IBMQ_TOKEN (deprecated)!"
+        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN "
+        "or IBMQ_TOKEN (deprecated)!"
     )
 
 

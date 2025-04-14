@@ -4,7 +4,6 @@ import pytest
 from qiskit_aer import AerSimulator
 from qiskit_braket_provider import AWSBraketProvider, BraketLocalBackend
 from qiskit_ibm_provider import IBMProvider
-from qiskit_ibm_runtime import IBMBackend
 
 from qbench.limits import get_limits
 from qbench.testing import MockSimulator
@@ -26,8 +25,8 @@ def ibmq_provider():
         return IBMProvider()
 
     raise ValueError(
-        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN or "
-        "IBMQ_TOKEN (deprecated)!"
+        "Missing IBM API token! You need to specify it via environment variable QISKIT_IBM_TOKEN "
+        "or IBMQ_TOKEN (deprecated)!"
     )
 
 
