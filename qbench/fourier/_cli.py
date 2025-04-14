@@ -8,17 +8,10 @@ from argparse import FileType, Namespace
 from yaml import safe_dump, safe_load
 
 from ..common_models import BackendDescriptionRoot
-from ._models import (
-    FourierDiscriminationAsyncResult,
-    FourierDiscriminationSyncResult,
-    FourierExperimentSet,
-)
-from .experiment_runner import (
-    fetch_statuses,
-    resolve_results,
-    run_experiment,
-    tabulate_results,
-)
+from ._models import (FourierDiscriminationAsyncResult,
+                      FourierDiscriminationSyncResult, FourierExperimentSet)
+from .experiment_runner import (fetch_statuses, resolve_results,
+                                run_experiment, tabulate_results)
 
 
 def _run_benchmark(args: Namespace) -> None:

@@ -5,7 +5,7 @@ from typing import Any, Iterable, NamedTuple, Optional, Sequence
 
 from qiskit import QuantumCircuit
 from qiskit.providers import JobV1
-from qiskit_ibm_runtime import SamplerV2, RuntimeJob, RuntimeJobV2
+from qiskit_ibm_runtime import RuntimeJob, RuntimeJobV2, SamplerV2
 from tqdm import tqdm
 
 from .common_models import Backend

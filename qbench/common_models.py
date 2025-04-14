@@ -3,11 +3,12 @@ from importlib import import_module
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic.v1 import BaseModel as PydanticBaseModel
-from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
-from qiskit_aer import AerSimulator
-from qiskit_ibm_runtime import QiskitRuntimeService
+from pydantic.v1 import (ConstrainedInt, Field, StrictStr, root_validator,
+                         validator)
 from qiskit.circuit import Parameter
 from qiskit.providers import BackendV1, BackendV2
+from qiskit_aer import AerSimulator
+from qiskit_ibm_runtime import QiskitRuntimeService
 
 from qbench._expressions import eval_expr
 

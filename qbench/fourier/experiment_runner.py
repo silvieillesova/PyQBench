@@ -1,6 +1,8 @@
 """Functions for running Fourier discrimination experiments and interacting with the results."""
+import sys
 from collections import Counter, defaultdict
 from logging import getLogger
+from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
 
 import numpy as np
@@ -10,9 +12,6 @@ from qiskit import QiskitError, QuantumCircuit, transpile
 from qiskit.circuit import Parameter
 from qiskit.providers import JobV1
 from tqdm import tqdm
-
-import sys
-from pathlib import Path
 
 from ._components.__init__ import discrimination_probability_upper_bound
 
@@ -25,22 +24,15 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_discrimination_direct_sum_circuits,
-    compute_probabilities_from_direct_sum_measurements,
-)
+    compute_probabilities_from_direct_sum_measurements)
 from qbench.schemes.postselection import (
     assemble_circuits_discrimination_postselection,
-    compute_probabilities_discrimination_postselection,
-)
+    compute_probabilities_discrimination_postselection)
+
 from ._components.components import FourierComponents
-from ._models import (
-    BatchResult,
-    FourierDiscriminationAsyncResult,
-    FourierDiscriminationSyncResult,
-    FourierExperimentSet,
-    QubitMitigationInfo,
-    ResultForCircuit,
-    SingleResult,
-)
+from ._models import (BatchResult, FourierDiscriminationAsyncResult,
+                      FourierDiscriminationSyncResult, FourierExperimentSet,
+                      QubitMitigationInfo, ResultForCircuit, SingleResult)
 
 logger = getLogger("qbench")
 

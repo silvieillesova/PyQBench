@@ -6,7 +6,7 @@ For detailed description of functions in this module refer to the documentation 
 FourierComponents class.
 """
 import numpy as np
-from qiskit.circuit import Instruction, QuantumCircuit, Parameter
+from qiskit.circuit import Instruction, Parameter, QuantumCircuit
 
 
 def state_preparation() -> Instruction:

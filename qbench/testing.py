@@ -5,9 +5,9 @@ from typing import List
 
 from qiskit import QiskitError
 from qiskit.providers import BackendV1, JobStatus, JobV1, ProviderV1
-from qiskit_aer import AerSimulator
 from qiskit.providers.models import BackendProperties
 from qiskit.providers.models.backendproperties import Nduv
+from qiskit_aer import AerSimulator
 
 
 def _make_job_fail(job):

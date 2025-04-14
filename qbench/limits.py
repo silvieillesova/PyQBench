@@ -3,9 +3,9 @@ from functools import singledispatch
 from typing import NamedTuple, Optional
 
 from qiskit_aer import AerSimulator
-from qiskit_ibm_runtime import IBMBackend as runtime_IBMBackend
-from qiskit_ibm_provider.ibm_backend import IBMBackend as provider_IBMBackend
 from qiskit_braket_provider import AWSBraketBackend
+from qiskit_ibm_provider.ibm_backend import IBMBackend as provider_IBMBackend
+from qiskit_ibm_runtime import IBMBackend as runtime_IBMBackend
 
 from .testing import MockSimulator
 

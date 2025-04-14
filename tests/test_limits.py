@@ -1,9 +1,9 @@
 import os
 
 import pytest
-from qiskit_ibm_provider import IBMProvider
 from qiskit_aer import AerSimulator
 from qiskit_braket_provider import AWSBraketProvider, BraketLocalBackend
+from qiskit_ibm_provider import IBMProvider
 from qiskit_ibm_runtime import IBMBackend
 
 from qbench.limits import get_limits

@@ -2,16 +2,11 @@ import pytest
 
 from qbench.common_models import SimpleBackendDescription
 from qbench.fourier import FourierExperimentSet
-from qbench.fourier.experiment_runner import (
-    fetch_statuses,
-    resolve_results,
-    run_experiment,
-    tabulate_results,
-)
+from qbench.fourier.experiment_runner import (fetch_statuses, resolve_results,
+                                              run_experiment, tabulate_results)
 from qbench.fourier.testing import (
     assert_sync_results_contain_data_for_all_experiments,
-    assert_tabulated_results_contain_data_for_all_experiments,
-)
+    assert_tabulated_results_contain_data_for_all_experiments)
 
 
 @pytest.fixture

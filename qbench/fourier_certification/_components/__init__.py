@@ -1,6 +1,7 @@
 """Module defining components used in Fourier certification experiment."""
-import numpy as np
 from typing import Union
+
+import numpy as np
 
 from . import _generic, _ibmq, _lucy, _rigetti
 

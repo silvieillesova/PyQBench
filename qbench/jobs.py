@@ -1,10 +1,10 @@
 """Implementation of utilities for interacting with jobs."""
+import os
 from functools import singledispatch
 from typing import Sequence
 
 from qiskit.providers import JobV1
 from qiskit_ibm_runtime import QiskitRuntimeService
-import os
 
 # TODO IBMQ_TOKEN is deprecated by now
 IBMQ_TOKEN = os.getenv('IBMQ_TOKEN')

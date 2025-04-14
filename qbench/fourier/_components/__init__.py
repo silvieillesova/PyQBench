@@ -1,5 +1,6 @@
 """Module defining components used in Fourier discrimination experiment."""
 from typing import Union
+
 import numpy as np
 
 
