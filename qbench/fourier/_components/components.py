@@ -1,4 +1,5 @@
 """Module defining components used in Fourier discrimination experiment."""
+
 from typing import Optional, Union
 
 from qiskit.circuit import Instruction, Parameter

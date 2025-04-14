@@ -1,4 +1,5 @@
 """Functions for splitting sequences of circuits into batches."""
+
 import math
 from itertools import islice
 from typing import Any, Iterable, NamedTuple, Optional, Sequence
@@ -83,8 +84,7 @@ def execute_in_batches(
     #     for batch in batches
     # )
 
-    result = (BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys)
-              for batch in batches)
+    result = (BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys) for batch in batches)
 
     if show_progress:
         result = tqdm(result, total=len(batches))

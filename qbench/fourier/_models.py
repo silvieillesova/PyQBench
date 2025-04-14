@@ -1,12 +1,17 @@
-from typing import (Any, Iterable, List, Literal, Optional, Sequence, Tuple,
-                    Type, TypeVar)
+from typing import Any, Iterable, List, Literal, Optional, Sequence, Tuple, Type, TypeVar
 
 import numpy as np
 from pydantic.v1 import validator
 
-from qbench.common_models import (AnglesRange, BackendDescription, BaseModel,
-                                  Qubit, QubitsPair, StrictPositiveInt,
-                                  SynchronousHistogram)
+from qbench.common_models import (
+    AnglesRange,
+    BackendDescription,
+    BaseModel,
+    Qubit,
+    QubitsPair,
+    StrictPositiveInt,
+    SynchronousHistogram,
+)
 
 
 class FourierExperimentSet(BaseModel):

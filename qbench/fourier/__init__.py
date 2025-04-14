@@ -22,16 +22,21 @@ p_{U(\\varphi)} = \\frac12 + \\frac14 \\lvert 1 - e^{i \\varphi}\\rvert.
 $$
 
 """
+
 import sys
 from typing import Union
 
 import numpy as np
 
 from ._cli import add_fourier_parser
+
 # from ._components import FourierComponents
 from ._components.components import FourierComponents
-from ._models import (FourierDiscriminationAsyncResult,
-                      FourierDiscriminationSyncResult, FourierExperimentSet)
+from ._models import (
+    FourierDiscriminationAsyncResult,
+    FourierDiscriminationSyncResult,
+    FourierExperimentSet,
+)
 
 __all__ = [
     # "discrimination_probability_upper_bound",

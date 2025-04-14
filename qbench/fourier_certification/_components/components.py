@@ -1,4 +1,5 @@
 """Module defining components used in Fourier certification experiment."""
+
 from typing import Optional, Union
 
 from qiskit.circuit import Instruction, Parameter
@@ -27,7 +28,12 @@ class FourierComponents:
       If no gateset is provided, high-level gates will be used without restriction on basis gates.
     """
 
-    def __init__(self, phi: Union[float, Parameter], delta: Union[float, Parameter], gateset: Optional[str] = None):
+    def __init__(
+        self,
+        phi: Union[float, Parameter],
+        delta: Union[float, Parameter],
+        gateset: Optional[str] = None,
+    ):
         """Initialize new instance of FourierComponents."""
         self.phi = phi
         self.delta = delta
@@ -119,6 +125,7 @@ class FourierComponents:
            https://arxiv.org/abs/1711.02086
         """
         return self._module.v0_v1_direct_sum(self.phi, self.delta)
+
 
 _GATESET_MAPPING = {
     "lucy": _lucy,

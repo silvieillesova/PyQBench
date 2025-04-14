@@ -3,6 +3,7 @@
 For detailed description of functions in this module refer to the documentation of
 FourierComponents class.
 """
+
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit import Instruction

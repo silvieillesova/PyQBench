@@ -3,8 +3,7 @@ from importlib import import_module
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic.v1 import BaseModel as PydanticBaseModel
-from pydantic.v1 import (ConstrainedInt, Field, StrictStr, root_validator,
-                         validator)
+from pydantic.v1 import ConstrainedInt, Field, StrictStr, root_validator, validator
 from qiskit.circuit import Parameter
 from qiskit.providers import BackendV1, BackendV2
 from qiskit_aer import AerSimulator
@@ -63,8 +62,10 @@ class AnglesRange(BaseModel):
             raise ValueError("There can be only one step if start equals stop.")
         return values
 
+
 class Delta(BaseModel):
     delta: Any
+
 
 class QubitsPair(BaseModel):
     target: Qubit
@@ -146,13 +147,15 @@ class IBMQBackendDescription(BaseModel):
     provider: IBMQProviderDescription
 
     def create_backend(self):
-        service = QiskitRuntimeService(channel='ibm_quantum',
-                                       instance=f'{self.provider.hub}/{self.provider.group}/{self.provider.project}')
+        service = QiskitRuntimeService(
+            channel="ibm_quantum",
+            instance=f"{self.provider.hub}/{self.provider.group}/{self.provider.project}",
+        )
 
         return service.backend(name=self.name)
 
         # TODO finish!
-        #exit(-1)
+        # exit(-1)
 
 
 class AerBackendDescription(BaseModel):
@@ -164,7 +167,10 @@ class AerBackendDescription(BaseModel):
 
 
 BackendDescription = Union[
-    SimpleBackendDescription, BackendFactoryDescription, IBMQBackendDescription, AerBackendDescription
+    SimpleBackendDescription,
+    BackendFactoryDescription,
+    IBMQBackendDescription,
+    AerBackendDescription,
 ]
 
 

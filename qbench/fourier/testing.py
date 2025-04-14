@@ -1,4 +1,5 @@
 """Testing utilities related qbench.fourier packager."""
+
 from typing import Sequence, Tuple
 
 import pandas as pd

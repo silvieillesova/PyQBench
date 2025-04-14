@@ -1,4 +1,5 @@
 """Module implementing experiment using direct sum of V0† ⊕ V1†."""
+
 from typing import Dict, Union
 
 from qiskit import QuantumCircuit, transpile
@@ -98,7 +99,7 @@ def compute_probabilities_from_direct_sum_measurements(
 
 
 def compute_probabilities_from_certification_direct_sum_measurements(
-    u_counts: MeasurementsDict
+    u_counts: MeasurementsDict,
 ) -> float:
     """Convert measurements obtained from direct_sum Fourier experiment to probabilities.
 
@@ -158,10 +159,18 @@ def benchmark_discrimination_using_direct_sum(
     )
 
     sampler = SamplerV2(mode=backend)
-    id_counts = sampler.run([transpile(circuits['id'], backend=backend)],
-                            shots=num_shots_per_measurement).result()[0].join_data().get_counts()
-    u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
-                           shots=num_shots_per_measurement).result()[0].join_data().get_counts()
+    id_counts = (
+        sampler.run([transpile(circuits["id"], backend=backend)], shots=num_shots_per_measurement)
+        .result()[0]
+        .join_data()
+        .get_counts()
+    )
+    u_counts = (
+        sampler.run([transpile(circuits["u"], backend=backend)], shots=num_shots_per_measurement)
+        .result()[0]
+        .join_data()
+        .get_counts()
+    )
 
     return compute_probabilities_from_direct_sum_measurements(id_counts, u_counts)
 
@@ -214,7 +223,11 @@ def benchmark_certification_using_direct_sum(
     )
 
     sampler = SamplerV2(mode=backend)
-    u_counts = sampler.run([transpile(circuits['u'], backend=backend)],
-                           shots=num_shots_per_measurement).result()[0].join_data().get_counts()
+    u_counts = (
+        sampler.run([transpile(circuits["u"], backend=backend)], shots=num_shots_per_measurement)
+        .result()[0]
+        .join_data()
+        .get_counts()
+    )
 
     return compute_probabilities_from_certification_direct_sum_measurements(u_counts)

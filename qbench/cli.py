@@ -1,4 +1,5 @@
 """Command line interface for qbench package."""
+
 from argparse import ArgumentParser
 
 from .fourier import add_fourier_parser

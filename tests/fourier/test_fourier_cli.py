@@ -7,12 +7,15 @@ from yaml import safe_dump, safe_load
 
 from qbench.cli import main
 from qbench.common_models import SimpleBackendDescription
-from qbench.fourier import (FourierDiscriminationAsyncResult,
-                            FourierDiscriminationSyncResult,
-                            FourierExperimentSet)
+from qbench.fourier import (
+    FourierDiscriminationAsyncResult,
+    FourierDiscriminationSyncResult,
+    FourierExperimentSet,
+)
 from qbench.fourier.testing import (
     assert_sync_results_contain_data_for_all_experiments,
-    assert_tabulated_results_contain_data_for_all_experiments)
+    assert_tabulated_results_contain_data_for_all_experiments,
+)
 from qbench.testing import MockProvider
 
 

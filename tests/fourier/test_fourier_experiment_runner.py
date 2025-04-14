@@ -2,11 +2,16 @@ import pytest
 
 from qbench.common_models import SimpleBackendDescription
 from qbench.fourier import FourierExperimentSet
-from qbench.fourier.experiment_runner import (fetch_statuses, resolve_results,
-                                              run_experiment, tabulate_results)
+from qbench.fourier.experiment_runner import (
+    fetch_statuses,
+    resolve_results,
+    run_experiment,
+    tabulate_results,
+)
 from qbench.fourier.testing import (
     assert_sync_results_contain_data_for_all_experiments,
-    assert_tabulated_results_contain_data_for_all_experiments)
+    assert_tabulated_results_contain_data_for_all_experiments,
+)
 
 
 @pytest.fixture
@@ -96,7 +101,10 @@ class TestASynchronousExecutionOfExperiments:
 
         tab = tabulate_results(result)
 
-        assert list(tab.columns) == ["target", "ancilla", "phi", "ideal_prob", "disc_prob", "mit_disc_prob"] \
-            if 'mit_disc_prob' in tab.columns \
+        assert (
+            list(tab.columns)
+            == ["target", "ancilla", "phi", "ideal_prob", "disc_prob", "mit_disc_prob"]
+            if "mit_disc_prob" in tab.columns
             else ["target", "ancilla", "phi", "ideal_prob", "disc_prob"]
+        )
         assert_tabulated_results_contain_data_for_all_experiments(experiments, tab)

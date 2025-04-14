@@ -3,16 +3,18 @@
 This module also contains thin wrappers for functions from qbench.fourier.experiment_runner,
 to adapt them for command line usage.
 """
-    
+
 from argparse import FileType, Namespace
 
 from yaml import safe_dump, safe_load
 
 from ..common_models import BackendDescriptionRoot
-from ._models import (FourierCertificationAsyncResult,
-                      FourierCertificationSyncResult, FourierExperimentSet)
-from .experiment_runner import (fetch_statuses, resolve_results,
-                                run_experiment, tabulate_results)
+from ._models import (
+    FourierCertificationAsyncResult,
+    FourierCertificationSyncResult,
+    FourierExperimentSet,
+)
+from .experiment_runner import fetch_statuses, resolve_results, run_experiment, tabulate_results
 
 
 def _run_benchmark(args: Namespace) -> None:
@@ -38,9 +40,9 @@ def _resolve(args: Namespace) -> None:
     res_dict = resolved.dict()
 
     # Remove 'name: u' from the output
-    for e in res_dict['data']:
-        for res in e['results_per_circuit']:
-            del res['name']
+    for e in res_dict["data"]:
+        for res in e["results_per_circuit"]:
+            del res["name"]
 
     safe_dump(res_dict, args.output, sort_keys=False)
 
@@ -50,10 +52,10 @@ def _tabulate(args: Namespace) -> None:
     t = safe_load(args.sync_results)
 
     # Add dummy name for the results
-    #TODO Should we go for another datatype specific for certification?
-    for e in t['data']:
-        for res in e['results_per_circuit']:
-            res['name'] = 'u'
+    # TODO Should we go for another datatype specific for certification?
+    for e in t["data"]:
+        for res in e["results_per_circuit"]:
+            res["name"] = "u"
     # results = FourierCertificationSyncResult(**safe_load(args.sync_results))
     results = FourierCertificationSyncResult(**t)
     table = tabulate_results(results)

@@ -1,4 +1,5 @@
 """Functions for running Fourier discrimination experiments and interacting with the results."""
+
 import sys
 from collections import Counter, defaultdict
 from logging import getLogger
@@ -24,15 +25,23 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_discrimination_direct_sum_circuits,
-    compute_probabilities_from_direct_sum_measurements)
+    compute_probabilities_from_direct_sum_measurements,
+)
 from qbench.schemes.postselection import (
     assemble_circuits_discrimination_postselection,
-    compute_probabilities_discrimination_postselection)
+    compute_probabilities_discrimination_postselection,
+)
 
 from ._components.components import FourierComponents
-from ._models import (BatchResult, FourierDiscriminationAsyncResult,
-                      FourierDiscriminationSyncResult, FourierExperimentSet,
-                      QubitMitigationInfo, ResultForCircuit, SingleResult)
+from ._models import (
+    BatchResult,
+    FourierDiscriminationAsyncResult,
+    FourierDiscriminationSyncResult,
+    FourierExperimentSet,
+    QubitMitigationInfo,
+    ResultForCircuit,
+    SingleResult,
+)
 
 logger = getLogger("qbench")
 
@@ -251,7 +260,7 @@ def run_experiment(
     components = FourierComponents(phi, gateset=experiments.gateset)
 
     backend = backend_description.create_backend()
-    print(f'Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}')
+    print(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
     logger.info(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
 
     circuits, keys = _collect_circuits_and_keys(experiments, components)

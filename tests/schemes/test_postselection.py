@@ -3,8 +3,7 @@ import pytest
 from qiskit_braket_provider import BraketLocalBackend
 
 from qbench.fourier import FourierComponents
-from qbench.schemes.postselection import \
-    benchmark_discrimination_using_postselection
+from qbench.schemes.postselection import benchmark_discrimination_using_postselection
 
 
 # TODO Have a look and decide, if it's worthy to test AmazonBraket's Lucy and Rigetti

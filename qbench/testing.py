@@ -1,4 +1,5 @@
 """Module implementing several test utilities and mocks."""
+
 from datetime import datetime
 from functools import lru_cache
 from typing import List

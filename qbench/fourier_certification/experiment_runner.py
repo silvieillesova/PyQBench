@@ -1,4 +1,5 @@
 """Functions for running Fourier certification experiments and interacting with the results."""
+
 from collections import Counter, defaultdict
 from logging import getLogger
 from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
@@ -17,16 +18,24 @@ from qbench.jobs import retrieve_jobs
 from qbench.limits import get_limits
 from qbench.schemes.direct_sum import (
     assemble_certification_direct_sum_circuits,
-    compute_probabilities_from_certification_direct_sum_measurements)
+    compute_probabilities_from_certification_direct_sum_measurements,
+)
 from qbench.schemes.postselection import (
     assemble_circuits_certification_postselection,
-    compute_probabilities_certification_postselection)
+    compute_probabilities_certification_postselection,
+)
 
 from ._components.__init__ import certification_probability_upper_bound
 from ._components.components import FourierComponents
-from ._models import (BatchResult, FourierCertificationAsyncResult,
-                      FourierCertificationSyncResult, FourierExperimentSet,
-                      QubitMitigationInfo, ResultForCircuit, SingleResult)
+from ._models import (
+    BatchResult,
+    FourierCertificationAsyncResult,
+    FourierCertificationSyncResult,
+    FourierExperimentSet,
+    QubitMitigationInfo,
+    ResultForCircuit,
+    SingleResult,
+)
 
 logger = getLogger("qbench")
 
@@ -48,7 +57,7 @@ def _log_fourier_experiments(experiments: FourierExperimentSet) -> None:
     logger.info("Running set of Fourier-certification experiments")
     logger.info("Number of qubit-pairs: %d", len(experiments.qubits))
     logger.info("Number of phi values: %d", experiments.angles.num_steps)
-    logger.info("Statistical significance: %s", '{0:g}'.format(experiments.delta))
+    logger.info("Statistical significance: %s", "{0:g}".format(experiments.delta))
     logger.info("Number of shots per circuit: %d", experiments.num_shots)
     logger.info("Probability estimation method: %s", experiments.method)
     logger.info("Gateset: %s", experiments.gateset)
@@ -226,7 +235,13 @@ def _resolve_batches(batches: Iterable[BatchJob]) -> List[SingleResult]:
 
     return [
         SingleResult.parse_obj(
-            {"target": target, "ancilla": ancilla, "phi": phi, "delta": delta, "results_per_circuit": results}
+            {
+                "target": target,
+                "ancilla": ancilla,
+                "phi": phi,
+                "delta": delta,
+                "results_per_circuit": results,
+            }
         )
         for (target, ancilla, phi, delta), results in resolved.items()
     ]
@@ -251,38 +266,45 @@ def run_experiment(
 
     if experiments.method == "postselection":
         circuit_key_pairs = []
-        for (target, ancilla, phi) in tqdm(list(experiments.enumerate_experiment_labels())):
+        for target, ancilla, phi in tqdm(list(experiments.enumerate_experiment_labels())):
             components = FourierComponents(phi, experiments.delta, gateset=experiments.gateset)
             cos = assemble_circuits_certification_postselection(
-            state_preparation=components.state_preparation,
-            u_dag=components.u_dag,
-            v0_dag=components.v0_dag,
-            v1_dag=components.v1_dag,
-            target=target,
-            ancilla=ancilla,
+                state_preparation=components.state_preparation,
+                u_dag=components.u_dag,
+                v0_dag=components.v0_dag,
+                v1_dag=components.v1_dag,
+                target=target,
+                ancilla=ancilla,
             )
             for circuit_name, circuit in cos.items():
-                circuit_key_pairs += [(transpile(circuit, backend=backend),
-                (target, ancilla, circuit_name, float(phi), experiments.delta),)]
+                circuit_key_pairs += [
+                    (
+                        transpile(circuit, backend=backend),
+                        (target, ancilla, circuit_name, float(phi), experiments.delta),
+                    )
+                ]
     else:
         circuit_key_pairs = []
-        for (target, ancilla, phi) in tqdm(list(experiments.enumerate_experiment_labels())):
+        for target, ancilla, phi in tqdm(list(experiments.enumerate_experiment_labels())):
             components = FourierComponents(phi, experiments.delta, gateset=experiments.gateset)
             cos = assemble_certification_direct_sum_circuits(
-            state_preparation=components.state_preparation,
-            u_dag=components.u_dag,
-            v0_v1_direct_sum_dag=components.v0_v1_direct_sum_dag,
-            target=target,
-            ancilla=ancilla,
+                state_preparation=components.state_preparation,
+                u_dag=components.u_dag,
+                v0_v1_direct_sum_dag=components.v0_v1_direct_sum_dag,
+                target=target,
+                ancilla=ancilla,
             )
             for circuit_name, circuit in cos.items():
-                circuit_key_pairs += [(transpile(circuit, backend=backend),
-                (target, ancilla, circuit_name, float(phi), experiments.delta),)]
+                circuit_key_pairs += [
+                    (
+                        transpile(circuit, backend=backend),
+                        (target, ancilla, circuit_name, float(phi), experiments.delta),
+                    )
+                ]
 
     logger.info("Assembling experiments...")
 
     circuits, keys = zip(*circuit_key_pairs)
-
 
     logger.info("Submitting jobs...")
     batches = execute_in_batches(
@@ -415,12 +437,12 @@ def tabulate_results(sync_results: FourierCertificationSyncResult) -> pd.DataFra
 
     result = pd.DataFrame(data=rows, columns=columns)
 
-    #fig, ax = plt.subplots()
-    #ax.plot(phis, theoretical_probs, color="red", label="theoretical_predictions")
-    #ax.plot(phis, actual_probs, color="blue", label="actual results")
-    #ax.legend()
+    # fig, ax = plt.subplots()
+    # ax.plot(phis, theoretical_probs, color="red", label="theoretical_predictions")
+    # ax.plot(phis, actual_probs, color="blue", label="actual results")
+    # ax.legend()
 
-    #plt.savefig(PATH + f'direct_sum_{backend}_{NUM_SHOTS_PER_MEASUREMENT}.png')
+    # plt.savefig(PATH + f'direct_sum_{backend}_{NUM_SHOTS_PER_MEASUREMENT}.png')
 
     logger.info("Done")
     return result

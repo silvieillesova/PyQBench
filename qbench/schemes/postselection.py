@@ -1,4 +1,5 @@
 """Module implementing postselection experiment."""
+
 from typing import Dict, Union
 
 from qiskit import QuantumCircuit, transpile
@@ -142,7 +143,12 @@ def compute_probabilities_certification_postselection(
      v1 measurement on ancilla.
     :return: probability of distinguishing between u and identity measurements.
     """
-    return (u_v1_counts.get("10",0) + u_v0_counts.get("00",0)) / (u_v0_counts.get("00",0) + u_v0_counts.get("01",0)+ u_v1_counts.get("10",0) + u_v1_counts.get("11",0))
+    return (u_v1_counts.get("10", 0) + u_v0_counts.get("00", 0)) / (
+        u_v0_counts.get("00", 0)
+        + u_v0_counts.get("01", 0)
+        + u_v1_counts.get("10", 0)
+        + u_v1_counts.get("11", 0)
+    )
 
 
 def benchmark_discrimination_using_postselection(
@@ -196,8 +202,10 @@ def benchmark_discrimination_using_postselection(
 
     sampler = SamplerV2(mode=backend)
     counts = {
-        key: sampler.run([transpile(circuit, backend=backend)],
-                         shots=num_shots_per_measurement).result()[0].join_data().get_counts()
+        key: sampler.run([transpile(circuit, backend=backend)], shots=num_shots_per_measurement)
+        .result()[0]
+        .join_data()
+        .get_counts()
         for key, circuit in circuits.items()
     }
 
@@ -258,11 +266,11 @@ def benchmark_certification_using_postselection(
     sampler = SamplerV2(mode=backend)
 
     counts = {
-        key: sampler.run([transpile(circuit, backend=backend)],
-                         shots=num_shots_per_measurement).result()[0].join_data().get_counts()
+        key: sampler.run([transpile(circuit, backend=backend)], shots=num_shots_per_measurement)
+        .result()[0]
+        .join_data()
+        .get_counts()
         for key, circuit in circuits.items()
     }
 
-    return compute_probabilities_certification_postselection(
-        counts["u_v0"], counts["u_v1"]
-    )
+    return compute_probabilities_certification_postselection(counts["u_v0"], counts["u_v1"])
