@@ -160,7 +160,7 @@ class IBMQBackendDescription(BaseModel):
 
 class AerBackendDescription(BaseModel):
     name: str
-    asynchronous: str = False
+    asynchronous: bool = False
 
     def create_backend(self):
         return AerSimulator()

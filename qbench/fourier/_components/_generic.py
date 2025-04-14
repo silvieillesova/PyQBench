@@ -1,6 +1,6 @@
-"""Generic implementation of Fourier components not tailored for any specific device.
+"""Generic implementation of Fourier _components not tailored for any specific device.
 
-Note that using components from this module on physical device typically requires compilation.
+Note that using _components from this module on physical device typically requires compilation.
 
 For detailed description of functions in this module refer to the documentation of
 FourierComponents class.

@@ -27,7 +27,7 @@ from qbench.schemes.postselection import (
     compute_probabilities_discrimination_postselection,
 )
 
-from ._components.__init__ import discrimination_probability_upper_bound
+from ._components import discrimination_probability_upper_bound
 from ._components.components import FourierComponents
 from ._models import (
     BatchResult,
@@ -261,10 +261,10 @@ def run_experiment(
     print(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
     logger.info(f"Backend type: {type(backend).__name__}, backend name: {_backend_name(backend)}")
 
-    circuits, keys = _collect_circuits_and_keys(experiments, components)
+    circuits_col, keys = _collect_circuits_and_keys(experiments, components)
 
     # Transpile circuit according to the universal set of gates supported by the selected backend
-    circuits = [transpile(circuit, backend=backend) for circuit in circuits]
+    circuits = [transpile(circuit, backend=backend) for circuit in circuits_col]
 
     logger.info("Submitting jobs...")
     batches = execute_in_batches(

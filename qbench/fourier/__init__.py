@@ -1,7 +1,7 @@
 """Functionalities relating specifically to Fourier-discrimination experiments.
 
 
-This package defines all instructions (components) needed for assembling
+This package defines all instructions (_components) needed for assembling
 circuits for benchmarking using Fourier-parametrized family.
 
 The Fourier family of measurements is defined as:
@@ -10,7 +10,7 @@ $$
 U(\\varphi) = H \\begin{pmatrix} 1&0\\\\0&e^{i\\varphi}\\end{pmatrix}H^\\dagger
 $$
 
-All components are available as properties of :class:`FourierComponents` class. The
+All _components are available as properties of :class:`FourierComponents` class. The
 instances of this class can be constructed in such a way that the instructions they
 provide are compatible with several different quantum devices available on the market.
 

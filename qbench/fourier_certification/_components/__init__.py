@@ -1,4 +1,4 @@
-"""Module defining components used in Fourier certification experiment."""
+"""Module defining _components used in Fourier certification experiment."""
 
 from typing import Union
 

@@ -1,4 +1,4 @@
-"""Module defining components used in Fourier discrimination experiment."""
+"""Module defining _components used in Fourier discrimination experiment."""
 
 from typing import Optional, Union
 
@@ -8,7 +8,7 @@ from . import _generic, _ibmq, _lucy, _rigetti
 
 
 class FourierComponents:
-    """Class defining components for Fourier-discrimination experiment.
+    """Class defining _components for Fourier-discrimination experiment.
 
     :param phi: angle defining measurement to discriminate. May be a number or an instance of
       a Qiskit Parameter. See
@@ -16,7 +16,7 @@ class FourierComponents:
       if you are new to parametrized circuits in Qiskit.
 
     :param gateset: name of the one of the predefined basis gate sets to use. It controls which
-      gates will be used to construct the circuit components. Available choices are:
+      gates will be used to construct the circuit _components. Available choices are:
 
       - :code:`"lucy"`: gateset comprising gates native to
         `OQC Lucy <https://aws.amazon.com/braket/quantum-computers/oqc/>`_ computer.

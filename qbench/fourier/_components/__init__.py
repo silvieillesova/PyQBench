@@ -1,4 +1,4 @@
-"""Module defining components used in Fourier discrimination experiment."""
+"""Module defining _components used in Fourier discrimination experiment."""
 
 from typing import Union
 
@@ -14,3 +14,5 @@ def discrimination_probability_upper_bound(
     :return: maximum probability with which identity and $p_{U(\\varphi)}$ can be discriminated.
     """
     return 0.5 + 0.25 * np.abs(1 - np.exp(1j * phi))
+
+__all__ = ["discrimination_probability_upper_bound"]

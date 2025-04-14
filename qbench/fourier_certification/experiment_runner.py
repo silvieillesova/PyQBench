@@ -2,14 +2,14 @@
 
 from collections import Counter, defaultdict
 from logging import getLogger
-from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
+from typing import Dict, Iterable, List, Optional, Tuple, Union, cast, Any, Generator
 
 import numpy as np
 import pandas as pd
 from mthree import M3Mitigation
 from qiskit import QiskitError, QuantumCircuit, transpile
 from qiskit.providers import JobV1
-from qiskit_ibm_runtime import RuntimeJobV2
+from qiskit_ibm_runtime import RuntimeJobV2, RuntimeJob
 from tqdm import tqdm
 
 from qbench.batching import BatchJob, execute_in_batches
@@ -25,7 +25,7 @@ from qbench.schemes.postselection import (
     compute_probabilities_certification_postselection,
 )
 
-from ._components.__init__ import certification_probability_upper_bound
+from ._components import certification_probability_upper_bound
 from ._components.components import FourierComponents
 from ._models import (
     BatchResult,
@@ -207,6 +207,19 @@ def _iter_batches(batches: Iterable[BatchJob]) -> Iterable[Tuple[int, CircuitKey
         for i, key in enumerate(tqdm(batch.keys, desc="Circuit", leave=False))
     )
 
+# def _iter_batches(batches: Iterable[BatchJob]) -> Generator[
+#     tuple[int, tuple[int, Any], JobV1 | RuntimeJob | RuntimeJobV2], None, None]:
+#     """Iterate batches in a flat manner.
+#
+#     The returned iterable yields triples of the form (i, key, job) where:
+#     - key is the key in one of the batches
+#     - i is its index in the corresponding batch
+#     - job is a job comprising this batch
+#     """
+#     for batch in tqdm(batches, desc="Batch"):
+#         for i, key in enumerate(tqdm(batch.keys, desc="Circuit", leave=False)):
+#             yield i, key, batch.job
+
 
 def _resolve_batches(batches: Iterable[BatchJob]) -> List[SingleResult]:
     """Resolve all results from batch of jobs and wrap them in a serializable object.
@@ -221,7 +234,8 @@ def _resolve_batches(batches: Iterable[BatchJob]) -> List[SingleResult]:
     resolved = defaultdict(list)
 
     num_failed = 0
-    for i, (target, ancilla, name, phi, delta), job in _iter_batches(batches):
+    for i, key, job in _iter_batches(batches):
+        target, ancilla, name, phi, delta = key
         result = _extract_result_from_job(job, target, ancilla, i, name)
         if result is None:
             num_failed += 1
