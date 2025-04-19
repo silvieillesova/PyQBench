@@ -2,14 +2,14 @@
 
 from collections import Counter, defaultdict
 from logging import getLogger
-from typing import Dict, Iterable, List, Optional, Tuple, Union, cast, Any, Generator
+from typing import Dict, Iterable, List, Optional, Tuple, Union, cast
 
 import numpy as np
 import pandas as pd
 from mthree import M3Mitigation
 from qiskit import QiskitError, QuantumCircuit, transpile
 from qiskit.providers import JobV1
-from qiskit_ibm_runtime import RuntimeJobV2, RuntimeJob
+from qiskit_ibm_runtime import RuntimeJobV2
 from tqdm import tqdm
 
 from qbench.batching import BatchJob, execute_in_batches
@@ -147,7 +147,7 @@ def _extract_result_from_job(
     return ResultForCircuit.parse_obj(result)
 
 
-CircuitKey = Tuple[int, int, str, float]
+CircuitKey = Tuple[int, int, str, float, float]
 
 
 def _collect_circuits_and_keys(
@@ -206,6 +206,7 @@ def _iter_batches(batches: Iterable[BatchJob]) -> Iterable[Tuple[int, CircuitKey
         for batch in tqdm(batches, desc="Batch")
         for i, key in enumerate(tqdm(batch.keys, desc="Circuit", leave=False))
     )
+
 
 # def _iter_batches(batches: Iterable[BatchJob]) -> Generator[
 #     tuple[int, tuple[int, Any], JobV1 | RuntimeJob | RuntimeJobV2], None, None]:

@@ -15,4 +15,5 @@ def discrimination_probability_upper_bound(
     """
     return 0.5 + 0.25 * np.abs(1 - np.exp(1j * phi))
 
+
 __all__ = ["discrimination_probability_upper_bound"]

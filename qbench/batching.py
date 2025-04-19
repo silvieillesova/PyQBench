@@ -84,7 +84,9 @@ def execute_in_batches(
     #     for batch in batches
     # )
 
-    result_gen = (BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys) for batch in batches)
+    result_gen = (
+        BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys) for batch in batches
+    )
 
     # Declare the variable 'result'
     result: Iterable[BatchJob]
