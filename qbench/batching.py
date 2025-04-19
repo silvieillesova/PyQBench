@@ -86,6 +86,8 @@ def execute_in_batches(
 
     result_gen = (BatchJob(sampler.run(batch.circuits, shots=shots), batch.keys) for batch in batches)
 
+    # Declare the variable 'result'
+    result: Iterable[BatchJob]
     if show_progress:
         result = tqdm(result_gen, total=len(batches))
     else:
