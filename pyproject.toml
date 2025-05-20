@@ -35,6 +35,7 @@ dependencies = [
     "qiskit",
     "qiskit-aer",
     "qiskit-ibm-runtime",
+    "qiskit-ibm-provider",
     "mthree",
     "tqdm",
     "pyyaml",
