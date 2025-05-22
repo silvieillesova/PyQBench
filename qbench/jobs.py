@@ -23,10 +23,6 @@ elif "IBMQ_TOKEN" in os.environ and "QISKIT_IBM_TOKEN" not in os.environ:
 elif "IQP_API_TOKEN" in os.environ and "QISKIT_IBM_TOKEN" not in os.environ:
     QISKIT_IBM_TOKEN = IQP_API_TOKEN
 
-print(f"QISKIT_IBM_TOKEN is set: {bool(QISKIT_IBM_TOKEN)}")
-print(f"IBMQ_TOKEN is set: {bool(IBMQ_TOKEN)}")
-print(f"IQP_API_TOKEN is set: {bool(IQP_API_TOKEN)}")
-
 service = QiskitRuntimeService("ibm_quantum", QISKIT_IBM_TOKEN)
 
 
