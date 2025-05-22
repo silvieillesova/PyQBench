@@ -21,7 +21,7 @@ jobs:
         run: pytest --cov=qbench --cov-report=xml -k 'not awscreds and not aersim'
         env:
           QISKIT_IBM_TOKEN: ${{ secrets.QISKIT_IBM_TOKEN }}
-     - name: Upload coverage reports to Codecov
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
 
   run_quality_checks:
