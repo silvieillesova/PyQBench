@@ -2,12 +2,11 @@ name: Run tests and other quality checks
 
 on: [pull_request]
 
-env:
-  QISKIT_IBM_TOKEN: ${{ secrets.QISKIT_IBM_TOKEN }}
-
 jobs:
   run_tests:
     runs-on: ubuntu-latest
+    env:
+      QISKIT_IBM_TOKEN: ${{ secrets.QISKIT_IBM_TOKEN }}
     strategy:
       matrix:
         python-versions: ["3.11"]
