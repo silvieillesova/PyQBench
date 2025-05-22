@@ -5,8 +5,6 @@ on: [pull_request]
 jobs:
   run_tests:
     runs-on: ubuntu-latest
-    env:
-      QISKIT_IBM_TOKEN: ${{ secrets.QISKIT_IBM_TOKEN }}
     strategy:
       matrix:
         python-versions: ["3.11"]
@@ -21,7 +19,9 @@ jobs:
           pip install .[test]
       - name: Run unit tests
         run: pytest --cov=qbench --cov-report=xml -k 'not awscreds and not aersim'
-      - name: Upload coverage reports to Codecov
+        env:
+          QISKIT_IBM_TOKEN: ${{ secrets.QISKIT_IBM_TOKEN }}
+     - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
 
   run_quality_checks:
